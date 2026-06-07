@@ -21,9 +21,9 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.end(`<!DOCTYPE html><html><body><script>
     (function(){
-      function recv(e){ window.opener.postMessage(${JSON.stringify(msg)}, e.origin); }
-      window.addEventListener('message', recv);
-      window.opener.postMessage('authorizing:github', '*');
+      var msg = ${JSON.stringify(msg)};
+      window.opener.postMessage(msg, '*');
+      setTimeout(function(){ window.close(); }, 500);
     })();
   </script></body></html>`);
 };
