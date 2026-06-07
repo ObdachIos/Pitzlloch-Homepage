@@ -1,0 +1,15 @@
+﻿# robots.txt – Pitzlloch
+
+User-agent: *
+Allow: /
+
+# Rechtliche Seiten nicht indexieren
+Disallow: /datenschutz.html
+Disallow: /impressum.html
+
+# Partials nicht indexieren
+Disallow: /partials/
+
+# Sitemap
+Sitemap: https://www.pitzlloch.de/sitemap.xml
+
