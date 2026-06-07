@@ -1,0 +1,80 @@
+{
+  "kategorien": [
+    {
+      "label": "Allgemeines",
+      "heading": "Allgemeine Fragen",
+      "fragen": [
+        {
+          "frage": "Wie nehme ich Kontakt auf und wie schnell erhalte ich eine Antwort?",
+          "antwort": "Sie erreichen uns per Telefon unter <a href=\"tel:+491606503067\">0160 6503067</a>, per WhatsApp oder über unser <a href=\"/kontakt.html\">Kontaktformular</a>. Wir melden uns in der Regel innerhalb von 24 Stunden bei Ihnen – oft noch am gleichen Tag. Bei dringenden Anfragen empfehlen wir den direkten Anruf."
+        },
+        {
+          "frage": "Kann ich das Pitzlloch besichtigen, bevor ich buche?",
+          "antwort": "Ja, selbstverständlich und sehr gerne! Wir glauben, dass ein Ort wie das Pitzlloch erlebt werden muss, um richtig zu wirken. Vereinbaren Sie einen unverbindlichen Besichtigungstermin über unser Kontaktformular oder rufen Sie uns an. Die Besichtigung ist kostenlos und unverbindlich."
+        },
+        {
+          "frage": "Ist das Pitzlloch das ganze Jahr über buchbar?",
+          "antwort": "Ja, wir sind ganzjährig buchbar – von romantischen Winterterminen mit Kerzenschein bis hin zu sommerlichen Hochzeiten unter freiem Himmel. Bitte beachten Sie, dass besonders die Monate Mai bis Oktober sehr beliebt sind und entsprechend früh ausgebucht sein können."
+        },
+        {
+          "frage": "Wie früh sollte ich das Pitzlloch für meine Hochzeit buchen?",
+          "antwort": "Für Hochzeiten in der Hauptsaison (Mai–Oktober) empfehlen wir eine Buchung mindestens 12–18 Monate im Voraus. Für Herbst- und Wintertermine sowie für kleinere Feiern sind oft auch kurzfristigere Buchungen möglich. Sprechen Sie uns einfach an – wir prüfen gerne die Verfügbarkeit für Ihren Wunschtermin."
+        }
+      ]
+    },
+    {
+      "label": "Räumlichkeiten",
+      "heading": "Kapazität & Räume",
+      "fragen": [
+        {
+          "frage": "Wie viele Gäste können im Pitzlloch feiern?",
+          "antwort": "Im Festsaal bieten wir Platz für bis zu 180 Personen beim Bankettformat, stehend bis zu 250 Personen. Mit Einbeziehung des Außenbereichs können wir insgesamt rund 200 Gäste komfortabel bewirten. Für kleinere Feiern gestalten wir den Raum gerne gemütlicher und intimer."
+        },
+        {
+          "frage": "Kann ich den Außenbereich auch bei schlechtem Wetter nutzen?",
+          "antwort": "Ja. Die überdachte Terrasse bietet ausreichend Schutz auch bei leichtem Regen. Bei stärkerem Unwetter weichen wir selbstverständlich in den Festsaal aus, der dann als komfortable Alternative zur Verfügung steht. Wir planen immer gemeinsam mit Ihnen einen \"Plan B\" für jede Wetterlage."
+        },
+        {
+          "frage": "Ist eine standesamtliche oder freie Trauung im Pitzlloch möglich?",
+          "antwort": "Freie Trauungen im Garten, auf der Terrasse oder im Festsaal sind bei uns jederzeit möglich. Für standesamtliche Trauungen wenden Sie sich bitte direkt an das Standesamt Grabenstätt – wir unterstützen Sie gerne bei der Koordination und Abstimmung."
+        }
+      ]
+    },
+    {
+      "label": "Essen & Trinken",
+      "heading": "Catering & Getränke",
+      "fragen": [
+        {
+          "frage": "Kann ich einen eigenen Caterer mitbringen?",
+          "antwort": "Grundsätzlich ist die Nutzung externer Caterer nach vorheriger Absprache möglich. Bitte klären Sie dies mit uns im Rahmen Ihrer Buchung, da bestimmte Voraussetzungen erfüllt sein müssen (Hygienekonzept, Haftung etc.). Unser eigenes Catering-Team freut sich jedoch sehr darauf, Sie kulinarisch zu verwöhnen!"
+        },
+        {
+          "frage": "Können Allergien und Unverträglichkeiten berücksichtigt werden?",
+          "antwort": "Selbstverständlich. Teilen Sie uns alle Allergien, Unverträglichkeiten und besonderen Ernährungsgewohnheiten Ihrer Gäste rechtzeitig mit – wir bereiten für jeden Gast das passende Gericht vor. Vegetarische, vegane und glutenfreie Menüs sind bei uns Standard, keine Ausnahme."
+        },
+        {
+          "frage": "Gibt es eine Möglichkeit zur Weinprobe oder einem Probemenü?",
+          "antwort": "Ja, nach Absprache bieten wir Ihnen gerne ein Probemenü an, damit Sie sicher sein können, dass die Speisen Ihren Vorstellungen entsprechen. Auch eine Weinberatung ist möglich. Bitte sprechen Sie uns direkt an."
+        }
+      ]
+    },
+    {
+      "label": "Logistik",
+      "heading": "Anreise & Übernachtung",
+      "fragen": [
+        {
+          "frage": "Wie komme ich zum Pitzlloch?",
+          "antwort": "Das Pitzlloch liegt in Pitzlloch 1, 83355 Grabenstätt. Mit dem Auto erreichen Sie uns über die A8 (Ausfahrt Grabenstätt/Traunstein). Ein kostenfreier Parkplatz für alle Gäste befindet sich direkt auf dem Gelände. Weitere Details zur Anfahrt finden Sie auf unserer <a href=\"/kontakt.html\">Kontaktseite</a>."
+        },
+        {
+          "frage": "Gibt es Übernachtungsmöglichkeiten in der Nähe?",
+          "antwort": "Die Chiemgau-Region bietet eine Vielzahl an Hotels, Gasthäusern und Ferienwohnungen in unmittelbarer Nähe. Wir empfehlen Ihnen gerne Kooperationspartner und können bei Gruppenanfragen auch Zimmerkontingente reservieren. Sprechen Sie uns einfach an!"
+        },
+        {
+          "frage": "Gibt es einen Shuttle-Service für Gäste?",
+          "antwort": "Einen eigenen Shuttle-Service bieten wir aktuell nicht an, können Ihnen jedoch auf Wunsch lokale Taxi- und Busdienste empfehlen. Für größere Gruppen lohnt sich oft die Buchung eines Minibusses – wir helfen Ihnen gerne bei der Organisation."
+        }
+      ]
+    }
+  ]
+}

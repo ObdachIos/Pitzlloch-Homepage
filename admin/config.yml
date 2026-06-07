@@ -12,42 +12,93 @@ locale: de
 
 collections:
 
+  # ── EINSTELLUNGEN ──────────────────────────────────────────
   - name: einstellungen
-    label: "Einstellungen"
+    label: "⚙️ Einstellungen"
     files:
       - name: global
-        label: "Kontakt und Allgemeine Infos"
+        label: "Kontakt & Allgemeine Infos"
         file: "data/global.json"
         format: json
         fields:
           - { label: "Telefon Anzeige", name: phone_display, widget: string }
-          - { label: "Telefon-Link", name: phone_href, widget: string }
+          - { label: "Telefon-Link (tel:+49…)", name: phone_href, widget: string }
           - { label: "E-Mail", name: email, widget: string }
           - { label: "Adresse Zeile 1", name: address1, widget: string }
           - { label: "Adresse Zeile 2", name: address2, widget: string }
-          - { label: "Oeffnungszeiten Mo-Fr", name: hours_weekday, widget: string }
-          - { label: "Oeffnungszeiten Samstag", name: hours_saturday, widget: string }
-          - { label: "Oeffnungszeiten Sonntag", name: hours_sunday, widget: string }
-          - { label: "Google Bewertung", name: rating, widget: string }
+          - { label: "Öffnungszeiten Mo–Fr", name: hours_weekday, widget: string }
+          - { label: "Öffnungszeiten Samstag", name: hours_saturday, widget: string }
+          - { label: "Öffnungszeiten Sonntag", name: hours_sunday, widget: string }
+          - { label: "Google Bewertung (z.B. 4,9)", name: rating, widget: string }
           - { label: "Anzahl Bewertungen", name: review_count, widget: string }
-          - { label: "Max Gaestezahl", name: max_guests, widget: string }
+          - { label: "Max. Gästezahl (z.B. 200+)", name: max_guests, widget: string }
 
+  # ── STARTSEITE ─────────────────────────────────────────────
   - name: startseite
-    label: "Startseite"
+    label: "🏠 Startseite"
     files:
       - name: hero
-        label: "Hero Startbild und Text"
+        label: "Hero – Startbild & Text"
         file: "data/hero.json"
         format: json
         fields:
           - { label: "Hero Bild", name: image, widget: image }
-          - { label: "Begruessungstext", name: welcome, widget: string }
+          - { label: "Begrüßungstext (klein)", name: welcome, widget: string }
           - { label: "Haupttitel", name: title, widget: string }
           - { label: "Untertitel", name: subtitle, widget: string }
           - { label: "Beschreibungstext", name: description, widget: text }
 
+  # ── PREISE ────────────────────────────────────────────────
+  - name: preise
+    label: "💰 Preise & Pakete"
+    files:
+      - name: pakete
+        label: "Pakete verwalten"
+        file: "data/preise.json"
+        format: json
+        fields:
+          - label: "Pakete"
+            name: pakete
+            widget: list
+            label_singular: "Paket"
+            fields:
+              - { label: "Emoji Icon", name: icon, widget: string, hint: "z.B. 🌿 oder ✨" }
+              - { label: "Paketname", name: name, widget: string }
+              - { label: "Preis / Info", name: price, widget: string, hint: "z.B. 'Auf Anfrage · ab 80 Personen'" }
+              - { label: "Empfohlen (hervorgehoben)", name: featured, widget: boolean, default: false }
+              - { label: "Badge Text", name: badge, widget: string, required: false, hint: "z.B. 'Beliebteste Wahl' – leer lassen wenn kein Badge" }
+              - label: "Leistungen"
+                name: features
+                widget: list
+                field: { label: "Leistung", name: feature, widget: string }
+
+  # ── FAQ ───────────────────────────────────────────────────
+  - name: faq
+    label: "❓ FAQ"
+    files:
+      - name: fragen
+        label: "Häufige Fragen verwalten"
+        file: "data/faq.json"
+        format: json
+        fields:
+          - label: "Kategorien"
+            name: kategorien
+            widget: list
+            label_singular: "Kategorie"
+            fields:
+              - { label: "Kategorie-Label (klein)", name: label, widget: string }
+              - { label: "Überschrift", name: heading, widget: string }
+              - label: "Fragen"
+                name: fragen
+                widget: list
+                label_singular: "Frage"
+                fields:
+                  - { label: "Frage", name: frage, widget: string }
+                  - { label: "Antwort", name: antwort, widget: text }
+
+  # ── BEWERTUNGEN ───────────────────────────────────────────
   - name: bewertungen
-    label: "Kundenbewertungen"
+    label: "⭐ Kundenbewertungen"
     files:
       - name: reviews
         label: "Bewertungen verwalten"
@@ -60,6 +111,53 @@ collections:
             label_singular: "Bewertung"
             fields:
               - { label: "Name", name: author, widget: string }
-              - { label: "Datum", name: date, widget: string }
-              - { label: "Text", name: text, widget: text }
+              - { label: "Datum", name: date, widget: string, hint: "z.B. September 2024" }
+              - { label: "Bewertungstext", name: text, widget: text }
               - { label: "Sterne", name: stars, widget: number, min: 1, max: 5, default: 5 }
+
+  # ── TEAM ─────────────────────────────────────────────────
+  - name: team
+    label: "👥 Team (Über uns)"
+    files:
+      - name: mitglieder
+        label: "Teammitglieder verwalten"
+        file: "data/team.json"
+        format: json
+        fields:
+          - label: "Teammitglieder"
+            name: mitglieder
+            widget: list
+            label_singular: "Person"
+            fields:
+              - { label: "Foto", name: bild, widget: image, required: false }
+              - { label: "Name", name: name, widget: string }
+              - { label: "Position / Rolle", name: rolle, widget: string }
+              - { label: "Zitat", name: zitat, widget: text }
+
+  # ── KUNDENBEREICH ─────────────────────────────────────────
+  - name: kundenbereich
+    label: "🔐 Kundenbereich"
+    files:
+      - name: kunden
+        label: "Kundenbereich Inhalte"
+        file: "data/kunden.json"
+        format: json
+        fields:
+          - { label: "Begrüßungstitel", name: titel, widget: string }
+          - { label: "Untertitel", name: untertitel, widget: text }
+          - { label: "Veranstaltungsname", name: veranstaltung_name, widget: string }
+          - { label: "Datum", name: veranstaltung_datum, widget: string, hint: "z.B. Samstag, 15. Juni 2025" }
+          - { label: "Uhrzeit", name: veranstaltung_uhrzeit, widget: string, hint: "z.B. 14:00 Uhr" }
+          - { label: "Ansprechpartner Name", name: ansprechpartner_name, widget: string }
+          - { label: "Ansprechpartner Telefon", name: ansprechpartner_telefon, widget: string }
+          - { label: "Ansprechpartner E-Mail", name: ansprechpartner_email, widget: string }
+          - label: "Ablaufplan"
+            name: ablauf
+            widget: list
+            label_singular: "Punkt"
+            required: false
+            fields:
+              - { label: "Uhrzeit", name: zeit, widget: string, hint: "z.B. 14:00 Uhr" }
+              - { label: "Beschreibung", name: punkt, widget: string }
+          - { label: "Wichtige Hinweise", name: hinweise, widget: text, required: false }
+          - { label: "Persönliche Nachricht", name: custom_nachricht, widget: text, required: false, hint: "Wird als Zitat angezeigt" }

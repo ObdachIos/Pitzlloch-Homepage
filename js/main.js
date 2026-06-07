@@ -293,10 +293,13 @@
   -------------------------------------------------- */
   async function loadContent() {
     try {
-      const [globalData, heroData, reviewsData] = await Promise.all([
+      const [globalData, heroData, reviewsData, faqData, preiseData, teamData] = await Promise.all([
         fetch('/data/global.json').then(r => r.ok ? r.json() : null).catch(() => null),
         fetch('/data/hero.json').then(r => r.ok ? r.json() : null).catch(() => null),
         fetch('/data/reviews.json').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/data/faq.json').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/data/preise.json').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/data/team.json').then(r => r.ok ? r.json() : null).catch(() => null),
       ]);
 
       // Hero-Bereich befüllen
@@ -341,6 +344,70 @@
               <p class="review-text">„${r.text}"</p>
               <div class="review-author">${r.author}</div>
               <div class="review-date">${r.date}</div>
+            </div>`).join('');
+          initFadeIn();
+        }
+      }
+
+      // FAQ dynamisch generieren
+      if (faqData?.kategorien?.length) {
+        const container = document.getElementById('faq-container');
+        if (container) {
+          container.innerHTML = faqData.kategorien.map((kat, ki) => `
+            <div class="${ki === 0 ? 'section-intro fade' : 'section-intro'}" style="text-align:left;max-width:100%;${ki > 0 ? 'margin-top:var(--sp-lg);' : ''}margin-bottom:var(--sp-md);">
+              <span class="section-label">${kat.label}</span>
+              <h2 style="font-size:2rem;">${kat.heading}</h2>
+            </div>
+            <div class="accordion fade">
+              ${kat.fragen.map(f => `
+                <div class="accordion-item">
+                  <button class="accordion-trigger">
+                    ${f.frage}
+                    <span class="accordion-icon">+</span>
+                  </button>
+                  <div class="accordion-body">
+                    <div class="accordion-body-inner">${f.antwort}</div>
+                  </div>
+                </div>`).join('')}
+            </div>`).join('');
+          initAccordion();
+          initFadeIn();
+        }
+      }
+
+      // Pakete dynamisch generieren
+      if (preiseData?.pakete?.length) {
+        const grid = document.getElementById('pakete-grid');
+        if (grid) {
+          grid.innerHTML = preiseData.pakete.map(p => `
+            <div class="pkg-card${p.featured ? ' featured' : ''}">
+              ${p.badge ? `<div class="pkg-badge">${p.badge}</div>` : ''}
+              <div style="font-size:2rem;${p.featured ? 'margin:1rem 0 .5rem;' : 'margin-bottom:.5rem;'}color:var(--gold);">${p.icon}</div>
+              <div class="pkg-name">${p.name}</div>
+              <div class="pkg-price">${p.price}</div>
+              <ul class="pkg-list">
+                ${p.features.map(f => `<li>${f}</li>`).join('')}
+              </ul>
+              <a href="/kontakt.html" class="${p.featured ? 'btn btn-gold' : 'btn btn-outline-dark'}" style="width:100%;justify-content:center;">Angebot anfragen</a>
+            </div>`).join('');
+        }
+      }
+
+      // Team dynamisch generieren
+      if (teamData?.mitglieder?.length) {
+        const grid = document.getElementById('team-grid');
+        if (grid) {
+          const delays = ['fade-d1','fade-d2','fade-d3'];
+          grid.innerHTML = teamData.mitglieder.map((m, i) => `
+            <div class="card fade ${delays[i % 3]}">
+              ${m.bild
+                ? `<img src="${m.bild}" alt="${m.name} – ${m.rolle}" class="card-image" loading="lazy">`
+                : `<div class="img-ph short" aria-label="Teamfoto Pitzlloch"></div>`}
+              <div class="card-body text-center">
+                <h4 style="margin-bottom:.2rem;">${m.name}</h4>
+                <span class="section-label">${m.rolle}</span>
+                <p style="font-size:.88rem;font-style:italic;font-family:var(--font-heading);">„${m.zitat}"</p>
+              </div>
             </div>`).join('');
           initFadeIn();
         }

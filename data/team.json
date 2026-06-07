@@ -1,0 +1,22 @@
+{
+  "mitglieder": [
+    {
+      "bild": "",
+      "name": "Name & Nachname",
+      "rolle": "Inhaber / Betriebsleitung",
+      "zitat": "Jeder Gast soll sich fühlen wie bei einem guten alten Freund – herzlich willkommen und rundum wohl."
+    },
+    {
+      "bild": "",
+      "name": "Name & Nachname",
+      "rolle": "Eventkoordination",
+      "zitat": "Ich liebe es, wenn am Ende des Abends alle Gäste strahlen – das ist mein Antrieb."
+    },
+    {
+      "bild": "",
+      "name": "Name & Nachname",
+      "rolle": "Küche & Catering",
+      "zitat": "Gutes Essen ist Liebe, die man schmeckt. Ich koche mit dem Herzen – für jeden Anlass."
+    }
+  ]
+}

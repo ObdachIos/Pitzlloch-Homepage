@@ -1,0 +1,51 @@
+{
+  "pakete": [
+    {
+      "icon": "🌿",
+      "name": "Chiemgau",
+      "price": "Auf Anfrage · ab 80 Personen",
+      "featured": false,
+      "badge": "",
+      "features": [
+        "Exklusive Nutzung Festsaal (8 Std.)",
+        "Grundausstattung Tische & Stühle",
+        "Standard Ton- & Lichttechnik",
+        "Garderobe und Sanitäranlagen",
+        "Koordination am Veranstaltungstag",
+        "Parkplätze inklusive"
+      ]
+    },
+    {
+      "icon": "✨",
+      "name": "Alpenrose",
+      "price": "Auf Anfrage · ab 100 Personen",
+      "featured": true,
+      "badge": "Beliebteste Wahl",
+      "features": [
+        "Alles aus dem Paket Chiemgau",
+        "Nutzung Außenbereich & Terrasse",
+        "Premium Beleuchtungskonzept",
+        "Catering-Beratung inklusive",
+        "Dekorations-Grundausstattung",
+        "Brautkammer / VIP-Raum",
+        "Verlängerung nach Absprache"
+      ]
+    },
+    {
+      "icon": "👑",
+      "name": "Grand Pitzlloch",
+      "price": "Auf Anfrage · individuelle Größe",
+      "featured": false,
+      "badge": "",
+      "features": [
+        "Gesamtes Gelände exklusiv buchbar",
+        "Individuelle Planung & Beratung",
+        "Full-Service Catering inklusive",
+        "Professionelle Eventkoordination",
+        "Persönlicher Ansprechpartner",
+        "Sonderausstattung nach Wunsch",
+        "Flexibles Zeitfenster (ganzer Tag/WE)"
+      ]
+    }
+  ]
+}

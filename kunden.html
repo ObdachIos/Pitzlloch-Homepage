@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kundenbereich – Pitzlloch</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .kunden-login-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      padding: 2rem;
+    }
+    .kunden-login-box {
+      background: #fff;
+      border-radius: var(--r-lg);
+      padding: 3rem 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0,0,0,.08);
+      text-align: center;
+    }
+    .kunden-login-logo {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--green-dark);
+      margin-bottom: .25rem;
+    }
+    .kunden-login-sub {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .kunden-login-box .form-group {
+      text-align: left;
+      margin-bottom: 1.25rem;
+    }
+    .kunden-error {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-radius: var(--r-sm);
+      padding: .75rem 1rem;
+      font-size: .88rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    /* Kundenbereich nach Login */
+    .kunden-bereich {
+      display: none;
+    }
+    .kunden-header {
+      background: var(--green-dark);
+      color: var(--cream);
+      padding: 3rem 0 2rem;
+      text-align: center;
+    }
+    .kunden-header h1 {
+      color: var(--cream);
+      margin-bottom: .5rem;
+    }
+    .kunden-header p {
+      color: rgba(245,240,232,.75);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .kunden-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .kunden-info-card {
+      background: var(--cream);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+    }
+    .kunden-info-card h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+    .kunden-ablauf-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .kunden-ablauf-item:last-child { border-bottom: none; }
+    .kunden-ablauf-zeit {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--gold);
+      min-width: 5rem;
+      font-weight: 500;
+    }
+    .kunden-logout {
+      font-size: .8rem;
+      color: rgba(245,240,232,.55);
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      margin-top: 1rem;
+    }
+    .kunden-hinweis {
+      background: var(--cream-dark);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SEITE -->
+  <div id="login-seite" class="kunden-login-wrap">
+    <div class="kunden-login-box">
+      <div class="kunden-login-logo">Pitzlloch</div>
+      <div class="kunden-login-sub">Kundenbereich – bitte melden Sie sich an</div>
+
+      <div id="login-error" class="kunden-error">Falsches Passwort. Bitte versuchen Sie es erneut.</div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="kunden-pw">Ihr Passwort</label>
+          <input type="password" id="kunden-pw" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;" id="login-btn">
+          Anmelden
+        </button>
+      </form>
+
+      <p style="margin-top:1.5rem;font-size:.8rem;color:var(--text-muted);">
+        Ihr Passwort erhalten Sie von Ihrem Ansprechpartner im Pitzlloch.
+      </p>
+    </div>
+  </div>
+
+  <!-- KUNDENBEREICH (nach Login) -->
+  <div id="kunden-bereich" class="kunden-bereich">
+
+    <div class="kunden-header">
+      <div class="container">
+        <span class="section-label" style="color:var(--gold);">Ihr persönlicher Bereich</span>
+        <h1 id="k-titel">Willkommen!</h1>
+        <p id="k-untertitel"></p>
+        <button class="kunden-logout" id="logout-btn">Abmelden</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="section bg-cream">
+        <div class="container">
+
+          <div class="kunden-info-grid" id="k-info-grid">
+            <!-- wird per JS befüllt -->
+          </div>
+
+          <div id="k-ablauf-section" style="display:none;margin-top:3rem;">
+            <h2 style="margin-bottom:1.5rem;">Ihr Ablaufplan</h2>
+            <div id="k-ablauf-liste"></div>
+          </div>
+
+          <div id="k-hinweise-section" style="display:none;margin-top:2rem;">
+            <div class="kunden-hinweis">
+              <h3 style="font-size:1rem;margin-bottom:.5rem;">Wichtige Hinweise</h3>
+              <p id="k-hinweise"></p>
+            </div>
+          </div>
+
+          <div id="k-nachricht-section" style="display:none;margin-top:2rem;background:#fff;border-radius:var(--r-lg);padding:2rem;text-align:center;">
+            <p id="k-nachricht" style="font-style:italic;font-family:var(--font-heading);font-size:1.2rem;"></p>
+          </div>
+
+          <div style="margin-top:3rem;text-align:center;padding:2rem;background:var(--green-dark);border-radius:var(--r-lg);">
+            <p style="color:var(--cream);margin-bottom:1rem;">Fragen? Wir sind gerne für Sie da.</p>
+            <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+              <a id="k-tel-link" href="tel:+491606503067" class="btn btn-gold">Jetzt anrufen</a>
+              <a id="k-mail-link" href="mailto:info@pitzlloch.de" class="btn btn-outline-light">E-Mail schreiben</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-ph"></div>
+  </div>
+
+  <script>
+  (function() {
+    const SESSION_KEY = 'pitzlloch_kunden_auth';
+
+    function setLoggedIn(pw) {
+      sessionStorage.setItem(SESSION_KEY, pw);
+    }
+
+    function getStoredPw() {
+      return sessionStorage.getItem(SESSION_KEY);
+    }
+
+    async function doLogin(pw) {
+      const btn = document.getElementById('login-btn');
+      btn.textContent = 'Wird geprüft …';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/kunden-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pw }),
+        });
+        if (res.ok) {
+          setLoggedIn(pw);
+          showBereich();
+        } else {
+          document.getElementById('login-error').style.display = 'block';
+          btn.textContent = 'Anmelden';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Fehler – bitte erneut versuchen';
+        btn.disabled = false;
+      }
+    }
+
+    async function verifyAndShow(pw) {
+      try {
+        const res = await fetch('/api/kunden-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pw }),
+        });
+        if (res.ok) {
+          showBereich();
+        } else {
+          sessionStorage.removeItem(SESSION_KEY);
+        }
+      } catch {}
+    }
+
+    async function showBereich() {
+      document.getElementById('login-seite').style.display = 'none';
+      document.getElementById('kunden-bereich').style.display = 'block';
+
+      // Footer laden
+      const fph = document.getElementById('footer-ph');
+      if (fph) {
+        const fr = await fetch('/partials/footer.html').catch(() => null);
+        if (fr && fr.ok) fph.innerHTML = await fr.text();
+      }
+
+      // Kundendaten laden
+      try {
+        const r = await fetch('/data/kunden.json');
+        if (!r.ok) return;
+        const d = await r.json();
+
+        setText('k-titel', d.titel);
+        setText('k-untertitel', d.untertitel);
+
+        // Info-Grid aufbauen
+        const infoGrid = document.getElementById('k-info-grid');
+        const cards = [];
+        if (d.veranstaltung_name || d.veranstaltung_datum) {
+          cards.push(`<div class="kunden-info-card">
+            <h3>Ihre Veranstaltung</h3>
+            ${d.veranstaltung_name ? `<p><strong>${d.veranstaltung_name}</strong></p>` : ''}
+            ${d.veranstaltung_datum ? `<p>📅 ${d.veranstaltung_datum}</p>` : ''}
+            ${d.veranstaltung_uhrzeit ? `<p>🕐 ${d.veranstaltung_uhrzeit}</p>` : ''}
+          </div>`);
+        }
+        if (d.ansprechpartner_name) {
+          const telLink = d.ansprechpartner_telefon
+            ? `<p>📞 <a href="tel:${d.ansprechpartner_telefon.replace(/\s/g,'')}">${d.ansprechpartner_telefon}</a></p>` : '';
+          const mailLink = d.ansprechpartner_email
+            ? `<p>✉️ <a href="mailto:${d.ansprechpartner_email}">${d.ansprechpartner_email}</a></p>` : '';
+          cards.push(`<div class="kunden-info-card">
+            <h3>Ihr Ansprechpartner</h3>
+            <p><strong>${d.ansprechpartner_name}</strong></p>
+            ${telLink}${mailLink}
+          </div>`);
+        }
+        infoGrid.innerHTML = cards.join('');
+
+        // Kontakt-Buttons
+        if (d.ansprechpartner_telefon) {
+          const a = document.getElementById('k-tel-link');
+          a.href = 'tel:' + d.ansprechpartner_telefon.replace(/\s/g,'');
+        }
+        if (d.ansprechpartner_email) {
+          document.getElementById('k-mail-link').href = 'mailto:' + d.ansprechpartner_email;
+        }
+
+        // Ablaufplan
+        if (d.ablauf && d.ablauf.length) {
+          document.getElementById('k-ablauf-section').style.display = 'block';
+          document.getElementById('k-ablauf-liste').innerHTML = d.ablauf.map(a =>
+            `<div class="kunden-ablauf-item">
+              <div class="kunden-ablauf-zeit">${a.zeit}</div>
+              <div>${a.punkt}</div>
+            </div>`).join('');
+        }
+
+        // Hinweise
+        if (d.hinweise) {
+          document.getElementById('k-hinweise-section').style.display = 'block';
+          document.getElementById('k-hinweise').textContent = d.hinweise;
+        }
+
+        // Persönliche Nachricht
+        if (d.custom_nachricht) {
+          document.getElementById('k-nachricht-section').style.display = 'block';
+          document.getElementById('k-nachricht').textContent = d.custom_nachricht;
+        }
+      } catch(e) {
+        console.warn('Kundendaten konnten nicht geladen werden', e);
+      }
+    }
+
+    function setText(id, val) {
+      if (!val) return;
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem(SESSION_KEY);
+      location.reload();
+    });
+
+    // Login-Formular
+    document.getElementById('login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('login-error').style.display = 'none';
+      doLogin(document.getElementById('kunden-pw').value);
+    });
+
+    // Bereits eingeloggt?
+    const stored = getStoredPw();
+    if (stored) verifyAndShow(stored);
+  })();
+  </script>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
