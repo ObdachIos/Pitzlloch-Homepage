@@ -8,5 +8,182 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+  (function () {
+
+    /* CSS der Website + Google Fonts in die Vorschau laden */
+    CMS.registerPreviewStyle('/css/style.css');
+    CMS.registerPreviewStyle(
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap'
+    );
+
+    const h = React.createElement;
+
+    /* Hilfsfunktion: Daten aus entry lesen (v2 + v3 kompatibel) */
+    function getData(entry) {
+      try {
+        if (entry && entry.data) return entry.data;
+        if (entry && typeof entry.getIn === 'function') return entry.getIn(['data']).toJS();
+      } catch (e) {}
+      return {};
+    }
+
+    /* Gemeinsame Stile */
+    const S = {
+      wrap:    { fontFamily: 'Inter, sans-serif', padding: '2rem', background: '#f5f0e8', minHeight: '100vh' },
+      label:   { fontSize: '.75rem', letterSpacing: '.15em', textTransform: 'uppercase', color: '#c9a96e', marginBottom: '.25rem', display: 'block' },
+      heading: { fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, color: '#1a2f27' },
+      card:    { background: '#fff', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 2px 12px rgba(0,0,0,.06)' },
+      gold:    '#c9a96e',
+      green:   '#1a2f27',
+      cream:   '#f5f0e8',
+    };
+
+    /* ── EINSTELLUNGEN ─────────────────────────────────── */
+    function EinstellungenPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: S.wrap },
+        h('h2', { style: { ...S.heading, fontSize: '1.8rem', marginBottom: '1.5rem' } }, '⚙️ Kontaktdaten – Vorschau'),
+        h('div', { style: { ...S.card, display: 'grid', gap: '.75rem', maxWidth: '480px' } },
+          row('📞 Telefon', d.phone_display),
+          row('✉️ E-Mail', d.email),
+          row('📍 Adresse', `${d.address1 || ''}, ${d.address2 || ''}`),
+          h('hr', { style: { border: 'none', borderTop: '1px solid #eee', margin: '.25rem 0' } }),
+          row('🕐 Mo–Fr', d.hours_weekday),
+          row('🕐 Samstag', d.hours_saturday),
+          row('🕐 Sonntag', d.hours_sunday),
+          h('hr', { style: { border: 'none', borderTop: '1px solid #eee', margin: '.25rem 0' } }),
+          row('⭐ Bewertung', `${d.rating || ''} Sterne (${d.review_count || ''} Rezensionen)`),
+          row('👥 Max. Gäste', d.max_guests),
+        )
+      );
+      function row(label, val) {
+        return h('div', { style: { display: 'flex', gap: '.75rem', fontSize: '.9rem' } },
+          h('span', { style: { minWidth: '140px', color: '#888' } }, label),
+          h('span', { style: { fontWeight: 500 } }, val || '–')
+        );
+      }
+    }
+    CMS.registerPreviewTemplate('einstellungen', EinstellungenPreview);
+
+    /* ── STARTSEITE / HERO ─────────────────────────────── */
+    function StartseitPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { position: 'relative', minHeight: '70vh', background: S.green, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' } },
+        d.image && h('img', { src: d.image, alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: .35 } }),
+        h('div', { style: { position: 'relative', zIndex: 1, textAlign: 'center', color: S.cream, padding: '3rem 2rem' } },
+          h('span', { style: { ...S.label, color: 'rgba(245,240,232,.65)' } }, d.welcome),
+          h('h1', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '5rem', fontWeight: 300, margin: '.2rem 0', lineHeight: 1, color: S.cream } }, d.title),
+          h('p', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.5rem', fontStyle: 'italic', opacity: .8 } }, d.subtitle),
+          h('p', { style: { opacity: .65, marginTop: '1.5rem', maxWidth: '500px', lineHeight: 1.7 } }, d.description)
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('startseite', StartseitPreview);
+
+    /* ── PREISE ────────────────────────────────────────── */
+    function PreisePreview({ entry }) {
+      const d = getData(entry);
+      const pakete = d.pakete || [];
+      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
+        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, '💰 Pakete – Vorschau'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem' } },
+          ...pakete.map((p, i) =>
+            h('div', { key: i, style: {
+              background: p.featured ? S.green : '#fff',
+              color: p.featured ? S.cream : S.green,
+              padding: '2rem', borderRadius: '16px', position: 'relative',
+              boxShadow: p.featured ? `0 8px 30px rgba(26,47,39,.3)` : '0 2px 12px rgba(0,0,0,.06)'
+            }},
+              p.badge && h('div', { style: { position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: S.gold, color: '#fff', fontSize: '.75rem', padding: '.3rem .9rem', borderRadius: '20px', whiteSpace: 'nowrap' } }, p.badge),
+              h('div', { style: { fontSize: '2rem', marginBottom: '.4rem' } }, p.icon),
+              h('div', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.7rem', fontWeight: 400 } }, p.name),
+              h('div', { style: { fontSize: '.82rem', opacity: .65, margin: '.4rem 0 1.25rem' } }, p.price),
+              h('ul', { style: { listStyle: 'none', padding: 0, margin: '0 0 1.5rem', fontSize: '.85rem' } },
+                ...(p.features || []).map((f, j) =>
+                  h('li', { key: j, style: { padding: '.35rem 0', borderBottom: `1px solid ${p.featured ? 'rgba(245,240,232,.12)' : '#f0ebe4'}`, display: 'flex', gap: '.5rem' } },
+                    h('span', { style: { color: S.gold, flexShrink: 0 } }, '✓'),
+                    f
+                  )
+                )
+              ),
+              h('div', { style: { background: p.featured ? S.gold : 'transparent', border: `2px solid ${p.featured ? S.gold : S.green}`, color: p.featured ? '#fff' : S.green, padding: '.65rem', borderRadius: '8px', textAlign: 'center', fontSize: '.88rem', fontWeight: 500 } }, 'Angebot anfragen')
+            )
+          )
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('preise', PreisePreview);
+
+    /* ── FAQ ───────────────────────────────────────────── */
+    function FaqPreview({ entry }) {
+      const d = getData(entry);
+      const kategorien = d.kategorien || [];
+      return h('div', { style: { ...S.wrap, maxWidth: '780px', margin: '0 auto' } },
+        h('h2', { style: { ...S.heading, fontSize: '1.8rem', marginBottom: '2rem' } }, '❓ FAQ – Vorschau'),
+        ...kategorien.map((kat, ki) =>
+          h('div', { key: ki, style: { marginBottom: '2.5rem' } },
+            h('span', { style: S.label }, kat.label),
+            h('h3', { style: { ...S.heading, fontSize: '1.5rem', marginBottom: '1rem' } }, kat.heading),
+            h('div', { style: { ...S.card, padding: 0, overflow: 'hidden' } },
+              ...(kat.fragen || []).map((f, fi) =>
+                h('div', { key: fi, style: { padding: '1rem 1.5rem', borderBottom: fi < kat.fragen.length - 1 ? '1px solid #f0ebe4' : 'none' } },
+                  h('p', { style: { fontWeight: 600, fontSize: '.9rem', marginBottom: '.4rem', color: S.green } }, f.frage),
+                  h('p', { style: { fontSize: '.85rem', color: '#555', lineHeight: 1.7, margin: 0 } }, f.antwort)
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('faq', FaqPreview);
+
+    /* ── BEWERTUNGEN ───────────────────────────────────── */
+    function BewertungenPreview({ entry }) {
+      const d = getData(entry);
+      const reviews = d.reviews || [];
+      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
+        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, `⭐ ${reviews.length} Bewertung${reviews.length !== 1 ? 'en' : ''}`),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' } },
+          ...reviews.map((r, i) =>
+            h('div', { key: i, style: { ...S.card } },
+              h('div', { style: { color: S.gold, fontSize: '1.1rem', marginBottom: '.6rem' } }, '★'.repeat(Math.min(r.stars || 5, 5))),
+              h('p', { style: { fontSize: '.88rem', fontStyle: 'italic', lineHeight: 1.7, color: '#444', marginBottom: '1rem' } }, `„${r.text}"`),
+              h('div', { style: { fontWeight: 600, fontSize: '.85rem' } }, r.author),
+              h('div', { style: { fontSize: '.8rem', color: '#999' } }, r.date)
+            )
+          )
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('bewertungen', BewertungenPreview);
+
+    /* ── TEAM ──────────────────────────────────────────── */
+    function TeamPreview({ entry }) {
+      const d = getData(entry);
+      const mitglieder = d.mitglieder || [];
+      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
+        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, '👥 Team – Vorschau'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' } },
+          ...mitglieder.map((m, i) =>
+            h('div', { key: i, style: { ...S.card, padding: 0, overflow: 'hidden', textAlign: 'center' } },
+              m.bild
+                ? h('img', { src: m.bild, alt: m.name, style: { width: '100%', height: '220px', objectFit: 'cover' } })
+                : h('div', { style: { width: '100%', height: '220px', background: S.cream, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: '#ccc' } }, '👤'),
+              h('div', { style: { padding: '1.25rem' } },
+                h('h4', { style: { margin: '0 0 .2rem', fontSize: '1.1rem', color: S.green } }, m.name),
+                h('span', { style: S.label }, m.rolle),
+                h('p', { style: { fontSize: '.85rem', fontStyle: 'italic', fontFamily: '"Cormorant Garamond", serif', color: '#666', marginTop: '.5rem' } }, `„${m.zitat}"`)
+              )
+            )
+          )
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('team', TeamPreview);
+
+  })();
+  </script>
 </body>
 </html>

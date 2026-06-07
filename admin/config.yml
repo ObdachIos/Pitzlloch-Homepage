@@ -21,39 +21,39 @@ collections:
         file: "data/global.json"
         format: json
         fields:
-          - { label: "Telefon Anzeige", name: phone_display, widget: string }
-          - { label: "Telefon-Link (tel:+49…)", name: phone_href, widget: string }
-          - { label: "E-Mail", name: email, widget: string }
-          - { label: "Adresse Zeile 1", name: address1, widget: string }
-          - { label: "Adresse Zeile 2", name: address2, widget: string }
-          - { label: "Öffnungszeiten Mo–Fr", name: hours_weekday, widget: string }
-          - { label: "Öffnungszeiten Samstag", name: hours_saturday, widget: string }
-          - { label: "Öffnungszeiten Sonntag", name: hours_sunday, widget: string }
-          - { label: "Google Bewertung (z.B. 4,9)", name: rating, widget: string }
-          - { label: "Anzahl Bewertungen", name: review_count, widget: string }
-          - { label: "Max. Gästezahl (z.B. 200+)", name: max_guests, widget: string }
+          - { label: "📞 Telefon (Anzeige)", name: phone_display, widget: string, hint: "Wird auf der Website angezeigt, z.B. 0160 6503067" }
+          - { label: "📞 Telefon (Link)", name: phone_href, widget: string, hint: "Für den Anruf-Link, z.B. tel:+491606503067" }
+          - { label: "✉️ E-Mail", name: email, widget: string }
+          - { label: "📍 Adresse Zeile 1", name: address1, widget: string, hint: "z.B. Pitzlloch 1" }
+          - { label: "📍 Adresse Zeile 2", name: address2, widget: string, hint: "z.B. 83355 Grabenstätt-Pitzlloch" }
+          - { label: "🕐 Öffnungszeiten Mo–Fr", name: hours_weekday, widget: string }
+          - { label: "🕐 Öffnungszeiten Samstag", name: hours_saturday, widget: string }
+          - { label: "🕐 Öffnungszeiten Sonntag", name: hours_sunday, widget: string }
+          - { label: "⭐ Google Bewertung", name: rating, widget: string, hint: "z.B. 4,9" }
+          - { label: "💬 Anzahl Bewertungen", name: review_count, widget: string, hint: "z.B. 69" }
+          - { label: "👥 Max. Gästezahl", name: max_guests, widget: string, hint: "z.B. 200+" }
 
   # ── STARTSEITE ─────────────────────────────────────────────
   - name: startseite
     label: "🏠 Startseite"
     files:
       - name: hero
-        label: "Hero – Startbild & Text"
+        label: "Startbild & Haupttext"
         file: "data/hero.json"
         format: json
         fields:
-          - { label: "Hero Bild", name: image, widget: image }
-          - { label: "Begrüßungstext (klein)", name: welcome, widget: string }
-          - { label: "Haupttitel", name: title, widget: string }
-          - { label: "Untertitel", name: subtitle, widget: string }
-          - { label: "Beschreibungstext", name: description, widget: text }
+          - { label: "🖼️ Hintergrundbild", name: image, widget: image, hint: "Das große Bild auf der Startseite" }
+          - { label: "Kleiner Text oben", name: welcome, widget: string, hint: "z.B. Willkommen im" }
+          - { label: "Haupttitel (groß)", name: title, widget: string, hint: "z.B. Pitzlloch" }
+          - { label: "Untertitel", name: subtitle, widget: string, hint: "z.B. Hochzeits- & Eventlocation" }
+          - { label: "Beschreibungstext", name: description, widget: text, hint: "Der kurze Absatz unter dem Titel" }
 
   # ── PREISE ────────────────────────────────────────────────
   - name: preise
     label: "💰 Preise & Pakete"
     files:
       - name: pakete
-        label: "Pakete verwalten"
+        label: "Pakete bearbeiten"
         file: "data/preise.json"
         format: json
         fields:
@@ -61,23 +61,25 @@ collections:
             name: pakete
             widget: list
             label_singular: "Paket"
+            summary: "{{icon}} {{name}} — {{price}}"
             fields:
-              - { label: "Emoji Icon", name: icon, widget: string, hint: "z.B. 🌿 oder ✨" }
+              - { label: "Icon (Emoji)", name: icon, widget: string, hint: "z.B. 🌿 ✨ 👑" }
               - { label: "Paketname", name: name, widget: string }
-              - { label: "Preis / Info", name: price, widget: string, hint: "z.B. 'Auf Anfrage · ab 80 Personen'" }
-              - { label: "Empfohlen (hervorgehoben)", name: featured, widget: boolean, default: false }
-              - { label: "Badge Text", name: badge, widget: string, required: false, hint: "z.B. 'Beliebteste Wahl' – leer lassen wenn kein Badge" }
-              - label: "Leistungen"
+              - { label: "Preis / Info-Zeile", name: price, widget: string, hint: "z.B. Auf Anfrage · ab 80 Personen" }
+              - { label: "Als empfohlen hervorheben?", name: featured, widget: boolean, default: false }
+              - { label: "Badge-Text", name: badge, widget: string, required: false, hint: "z.B. Beliebteste Wahl — leer lassen für kein Badge" }
+              - label: "Leistungen (Liste)"
                 name: features
                 widget: list
+                summary: "{{fields.feature}}"
                 field: { label: "Leistung", name: feature, widget: string }
 
   # ── FAQ ───────────────────────────────────────────────────
   - name: faq
-    label: "❓ FAQ"
+    label: "❓ Häufige Fragen"
     files:
       - name: fragen
-        label: "Häufige Fragen verwalten"
+        label: "Fragen & Antworten bearbeiten"
         file: "data/faq.json"
         format: json
         fields:
@@ -85,13 +87,15 @@ collections:
             name: kategorien
             widget: list
             label_singular: "Kategorie"
+            summary: "{{heading}} ({{label}})"
             fields:
-              - { label: "Kategorie-Label (klein)", name: label, widget: string }
-              - { label: "Überschrift", name: heading, widget: string }
+              - { label: "Kategorie-Label (klein, oben)", name: label, widget: string, hint: "z.B. Allgemeines" }
+              - { label: "Kategorie-Überschrift", name: heading, widget: string, hint: "z.B. Allgemeine Fragen" }
               - label: "Fragen"
                 name: fragen
                 widget: list
                 label_singular: "Frage"
+                summary: "{{frage}}"
                 fields:
                   - { label: "Frage", name: frage, widget: string }
                   - { label: "Antwort", name: antwort, widget: text }
@@ -101,7 +105,7 @@ collections:
     label: "⭐ Kundenbewertungen"
     files:
       - name: reviews
-        label: "Bewertungen verwalten"
+        label: "Bewertungen bearbeiten"
         file: "data/reviews.json"
         format: json
         fields:
@@ -109,18 +113,19 @@ collections:
             name: reviews
             widget: list
             label_singular: "Bewertung"
+            summary: "⭐ {{author}} – {{date}}"
             fields:
-              - { label: "Name", name: author, widget: string }
+              - { label: "Name des Gastes", name: author, widget: string, hint: "z.B. Anna & Markus K." }
               - { label: "Datum", name: date, widget: string, hint: "z.B. September 2024" }
               - { label: "Bewertungstext", name: text, widget: text }
-              - { label: "Sterne", name: stars, widget: number, min: 1, max: 5, default: 5 }
+              - { label: "Sterne (1–5)", name: stars, widget: number, value_type: int, min: 1, max: 5, default: 5 }
 
   # ── TEAM ─────────────────────────────────────────────────
   - name: team
-    label: "👥 Team (Über uns)"
+    label: "👥 Team"
     files:
       - name: mitglieder
-        label: "Teammitglieder verwalten"
+        label: "Teammitglieder bearbeiten"
         file: "data/team.json"
         format: json
         fields:
@@ -128,9 +133,9 @@ collections:
             name: mitglieder
             widget: list
             label_singular: "Person"
+            summary: "{{name}} ({{rolle}})"
             fields:
-              - { label: "Foto", name: bild, widget: image, required: false }
+              - { label: "Foto", name: bild, widget: image, required: false, hint: "Teamfoto der Person" }
               - { label: "Name", name: name, widget: string }
-              - { label: "Position / Rolle", name: rolle, widget: string }
-              - { label: "Zitat", name: zitat, widget: text }
-
+              - { label: "Position / Rolle", name: rolle, widget: string, hint: "z.B. Inhaber / Betriebsleitung" }
+              - { label: "Zitat", name: zitat, widget: text, hint: "Kurzes persönliches Zitat der Person" }
