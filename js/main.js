@@ -289,9 +289,78 @@
   }
 
   /* --------------------------------------------------
-     10. Init
+     10. Content aus JSON-Dateien laden (CMS-Daten)
+  -------------------------------------------------- */
+  async function loadContent() {
+    try {
+      const [globalData, heroData, reviewsData] = await Promise.all([
+        fetch('/data/global.json').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/data/hero.json').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/data/reviews.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      ]);
+
+      // Hero-Bereich befüllen
+      if (heroData) {
+        const img = document.querySelector('.hero-bg-img');
+        if (img && heroData.image) img.src = heroData.image;
+        setText('.hero-welcome', heroData.welcome);
+        setText('.hero-title',   heroData.title);
+        setText('.hero-subtitle', heroData.subtitle);
+        const sub = document.querySelector('.hero-sub');
+        if (sub && heroData.description) sub.innerHTML = heroData.description.replace(/\n/g, '<br>');
+      }
+
+      // Kontaktdaten global befüllen
+      if (globalData) {
+        document.querySelectorAll('[data-phone]').forEach(el => {
+          el.textContent = globalData.phone_display;
+          if (el.tagName === 'A') el.href = globalData.phone_href;
+        });
+        document.querySelectorAll('[data-email]').forEach(el => {
+          el.textContent = globalData.email;
+          if (el.tagName === 'A') el.href = 'mailto:' + globalData.email;
+        });
+        document.querySelectorAll('[data-address1]').forEach(el => el.textContent = globalData.address1);
+        document.querySelectorAll('[data-address2]').forEach(el => el.textContent = globalData.address2);
+        document.querySelectorAll('[data-hours-weekday]').forEach(el => el.textContent = globalData.hours_weekday);
+        document.querySelectorAll('[data-hours-saturday]').forEach(el => el.textContent = globalData.hours_saturday);
+        document.querySelectorAll('[data-hours-sunday]').forEach(el => el.textContent = globalData.hours_sunday);
+        document.querySelectorAll('[data-rating]').forEach(el => el.textContent = globalData.rating);
+        document.querySelectorAll('[data-review-count]').forEach(el => el.textContent = globalData.review_count);
+        document.querySelectorAll('[data-max-guests]').forEach(el => el.textContent = globalData.max_guests);
+      }
+
+      // Bewertungen dynamisch generieren
+      if (reviewsData?.reviews?.length) {
+        const grid = document.getElementById('reviews-grid');
+        if (grid) {
+          const delays = ['fade-d1','fade-d2','fade-d3'];
+          grid.innerHTML = reviewsData.reviews.map((r, i) => `
+            <div class="review-card fade ${delays[i % 3]}">
+              <div class="review-stars">${'★'.repeat(r.stars || 5)}</div>
+              <p class="review-text">„${r.text}"</p>
+              <div class="review-author">${r.author}</div>
+              <div class="review-date">${r.date}</div>
+            </div>`).join('');
+          initFadeIn();
+        }
+      }
+    } catch (e) {
+      console.warn('Content laden fehlgeschlagen:', e);
+    }
+  }
+
+  function setText(selector, value) {
+    if (!value) return;
+    const el = document.querySelector(selector);
+    if (el) el.textContent = value;
+  }
+
+  /* --------------------------------------------------
+     11. Init
   -------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
+    loadContent();
     initFadeIn();
     initAccordion();
     initGallery();
