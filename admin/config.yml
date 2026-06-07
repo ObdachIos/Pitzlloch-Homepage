@@ -1,4 +1,4 @@
-﻿backend:
+backend:
   name: github
   repo: Obdachlos/Pitzlloch-Homepage
   branch: main
@@ -7,8 +7,6 @@
 
 media_folder: "images"
 public_folder: "/images"
-
-locale: de
 
 collections:
 
