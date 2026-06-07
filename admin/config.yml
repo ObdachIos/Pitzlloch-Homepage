@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: Obdachlos/Pitzlloch-Homepage
+  repo: ObdachIos/Pitzlloch-Homepage
   branch: main
   base_url: https://pitzlloch-homepage.vercel.app
   auth_endpoint: /api/auth
