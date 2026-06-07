@@ -1,0 +1,58 @@
+{
+  "reviews": [
+    {
+      "author": "Anna & Markus K.",
+      "date": "September 2024",
+      "text": "Das Pitzlloch hat unsere Hochzeitsfeier zu einem absoluten Traum gemacht. Die Location ist atemberaubend schön, das Team unglaublich herzlich und professionell. Unsere Gäste reden noch heute davon.",
+      "stars": 5
+    },
+    {
+      "author": "Sabine & Thomas H.",
+      "date": "Juli 2024",
+      "text": "Eine Location mit echter Seele. Vom ersten Gespräch bis zum letzten Tanz haben wir uns rundum gut aufgehoben gefühlt. Der Außenbereich im Abendlicht war einfach magisch.",
+      "stars": 5
+    },
+    {
+      "author": "Elisabeth M.",
+      "date": "Mai 2024",
+      "text": "Für unseren 60. Geburtstag hätten wir uns keinen schöneren Ort vorstellen können. Das Pitzlloch hat alle unsere Wünsche erfüllt – und sogar übertroffen.",
+      "stars": 5
+    },
+    {
+      "author": "Familie Bauer",
+      "date": "April 2024",
+      "text": "Das Catering war auf einem Level, das wir nicht erwartet hatten – frisch, regional, köstlich. Und die Stimmung im Saal war einfach unvergleichlich warm und einladend.",
+      "stars": 5
+    },
+    {
+      "author": "Firma Müller GmbH",
+      "date": "Dezember 2023",
+      "text": "Wir haben hier unsere Weihnachtsfeier mit 80 Mitarbeitern gefeiert und waren begeistert. Perfekte Organisation, tolles Ambiente, leckeres Essen. Absolut empfehlenswert!",
+      "stars": 5
+    },
+    {
+      "author": "Laura & Stefan W.",
+      "date": "August 2024",
+      "text": "Wunderschöne Location mitten in der bayerischen Natur. Die Terrasse bei Sonnenuntergang während unserer Trauung – das vergessen wir nie im Leben.",
+      "stars": 5
+    },
+    {
+      "author": "Claudia & Michael N.",
+      "date": "Juni 2024",
+      "text": "Das Team ist einfach Gold wert. Immer erreichbar, immer hilfsbereit, immer einen Schritt voraus. Man merkt, dass hier Menschen arbeiten, die ihren Beruf wirklich lieben.",
+      "stars": 5
+    },
+    {
+      "author": "Familie Schneider",
+      "date": "Oktober 2023",
+      "text": "Die goldene Hochzeit meiner Eltern war ein unvergesslicher Abend. Das Pitzlloch hat jeden Wunsch erfüllt – mit so viel Herzlichkeit, dass wir alle Tränen in den Augen hatten.",
+      "stars": 5
+    },
+    {
+      "author": "Johanna & Felix R.",
+      "date": "Mai 2024",
+      "text": "Wer eine Hochzeitslocation im Chiemgau sucht, wird sie hier finden. Idyllische Lage, traumhafte Atmosphäre, perfekter Service. Unsere Traumhochzeit ist wahr geworden.",
+      "stars": 5
+    }
+  ]
+}

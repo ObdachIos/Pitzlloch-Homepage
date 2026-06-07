@@ -1,8 +1,8 @@
-backend:
+﻿backend:
   name: github
-  repo: GITHUB_OWNER/GITHUB_REPO
+  repo: Obdachlos/Pitzlloch-Homepage
   branch: main
-  base_url: https://IHRE_VERCEL_URL.vercel.app
+  base_url: https://pitzlloch-homepage.vercel.app
   auth_endpoint: /api/auth
 
 media_folder: "images"
@@ -13,41 +13,41 @@ locale: de
 collections:
 
   - name: einstellungen
-    label: "⚙️ Einstellungen"
+    label: "Einstellungen"
     files:
       - name: global
-        label: "Kontakt & Allgemeine Infos"
+        label: "Kontakt und Allgemeine Infos"
         file: "data/global.json"
         format: json
         fields:
-          - { label: "Telefon (Anzeige)", name: phone_display, widget: string }
-          - { label: "Telefon-Link (tel:+49...)", name: phone_href, widget: string }
+          - { label: "Telefon Anzeige", name: phone_display, widget: string }
+          - { label: "Telefon-Link", name: phone_href, widget: string }
           - { label: "E-Mail", name: email, widget: string }
           - { label: "Adresse Zeile 1", name: address1, widget: string }
           - { label: "Adresse Zeile 2", name: address2, widget: string }
-          - { label: "Öffnungszeiten Mo–Fr", name: hours_weekday, widget: string }
-          - { label: "Öffnungszeiten Samstag", name: hours_saturday, widget: string }
-          - { label: "Öffnungszeiten Sonntag", name: hours_sunday, widget: string }
+          - { label: "Oeffnungszeiten Mo-Fr", name: hours_weekday, widget: string }
+          - { label: "Oeffnungszeiten Samstag", name: hours_saturday, widget: string }
+          - { label: "Oeffnungszeiten Sonntag", name: hours_sunday, widget: string }
           - { label: "Google Bewertung", name: rating, widget: string }
-          - { label: "Anzahl Google Bewertungen", name: review_count, widget: string }
-          - { label: "Max. Gästeanzahl", name: max_guests, widget: string }
+          - { label: "Anzahl Bewertungen", name: review_count, widget: string }
+          - { label: "Max Gaestezahl", name: max_guests, widget: string }
 
   - name: startseite
-    label: "🏠 Startseite"
+    label: "Startseite"
     files:
       - name: hero
-        label: "Hero – Startbild & Text"
+        label: "Hero Startbild und Text"
         file: "data/hero.json"
         format: json
         fields:
           - { label: "Hero Bild", name: image, widget: image }
-          - { label: "Begrüßungstext (klein, kursiv)", name: welcome, widget: string }
+          - { label: "Begruessungstext", name: welcome, widget: string }
           - { label: "Haupttitel", name: title, widget: string }
           - { label: "Untertitel", name: subtitle, widget: string }
           - { label: "Beschreibungstext", name: description, widget: text }
 
   - name: bewertungen
-    label: "⭐ Kundenbewertungen"
+    label: "Kundenbewertungen"
     files:
       - name: reviews
         label: "Bewertungen verwalten"
@@ -59,7 +59,7 @@ collections:
             widget: list
             label_singular: "Bewertung"
             fields:
-              - { label: "Name des Gastes", name: author, widget: string }
-              - { label: "Datum", name: date, widget: string, hint: "z.B. September 2024" }
-              - { label: "Bewertungstext", name: text, widget: text }
-              - { label: "Sterne (1–5)", name: stars, widget: number, min: 1, max: 5, default: 5 }
+              - { label: "Name", name: author, widget: string }
+              - { label: "Datum", name: date, widget: string }
+              - { label: "Text", name: text, widget: text }
+              - { label: "Sterne", name: stars, widget: number, min: 1, max: 5, default: 5 }
