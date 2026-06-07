@@ -21,16 +21,16 @@ collections:
         file: "data/global.json"
         format: json
         fields:
-          - { label: "📞 Telefon (Anzeige)", name: phone_display, widget: string, hint: "Wird auf der Website angezeigt, z.B. 0160 6503067" }
-          - { label: "📞 Telefon (Link)", name: phone_href, widget: string, hint: "Für den Anruf-Link, z.B. tel:+491606503067" }
+          - { label: "📞 Telefon (Anzeige)", name: phone_display, widget: string }
+          - { label: "📞 Telefon (Link)", name: phone_href, widget: string, hint: "z.B. tel:+491606503067" }
           - { label: "✉️ E-Mail", name: email, widget: string }
-          - { label: "📍 Adresse Zeile 1", name: address1, widget: string, hint: "z.B. Pitzlloch 1" }
-          - { label: "📍 Adresse Zeile 2", name: address2, widget: string, hint: "z.B. 83355 Grabenstätt-Pitzlloch" }
+          - { label: "📍 Adresse Zeile 1", name: address1, widget: string }
+          - { label: "📍 Adresse Zeile 2", name: address2, widget: string }
           - { label: "🕐 Öffnungszeiten Mo–Fr", name: hours_weekday, widget: string }
           - { label: "🕐 Öffnungszeiten Samstag", name: hours_saturday, widget: string }
           - { label: "🕐 Öffnungszeiten Sonntag", name: hours_sunday, widget: string }
           - { label: "⭐ Google Bewertung", name: rating, widget: string, hint: "z.B. 4,9" }
-          - { label: "💬 Anzahl Bewertungen", name: review_count, widget: string, hint: "z.B. 69" }
+          - { label: "💬 Anzahl Bewertungen", name: review_count, widget: string }
           - { label: "👥 Max. Gästezahl", name: max_guests, widget: string, hint: "z.B. 200+" }
 
   # ── STARTSEITE ─────────────────────────────────────────────
@@ -42,11 +42,127 @@ collections:
         file: "data/hero.json"
         format: json
         fields:
-          - { label: "🖼️ Hintergrundbild", name: image, widget: image, hint: "Das große Bild auf der Startseite" }
-          - { label: "Kleiner Text oben", name: welcome, widget: string, hint: "z.B. Willkommen im" }
-          - { label: "Haupttitel (groß)", name: title, widget: string, hint: "z.B. Pitzlloch" }
-          - { label: "Untertitel", name: subtitle, widget: string, hint: "z.B. Hochzeits- & Eventlocation" }
-          - { label: "Beschreibungstext", name: description, widget: text, hint: "Der kurze Absatz unter dem Titel" }
+          - { label: "🖼️ Hintergrundbild", name: image, widget: image }
+          - { label: "Kleiner Text oben", name: welcome, widget: string }
+          - { label: "Haupttitel (groß)", name: title, widget: string }
+          - { label: "Untertitel", name: subtitle, widget: string }
+          - { label: "Beschreibungstext", name: description, widget: text }
+
+  # ── HOCHZEITEN ─────────────────────────────────────────────
+  - name: hochzeiten
+    label: "💍 Hochzeiten"
+    files:
+      - name: bilder
+        label: "Bilder & Texte"
+        file: "data/page-hochzeiten.json"
+        format: json
+        fields:
+          - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
+          - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "🖼️ Bild Festsaal", name: festsaal_bild, widget: image, required: false }
+          - { label: "🖼️ Bild Außenbereich", name: aussen_bild, widget: image, required: false }
+
+  # ── FEIERN & EVENTS ────────────────────────────────────────
+  - name: feiern
+    label: "🎉 Feiern & Events"
+    files:
+      - name: bilder
+        label: "Bilder & Texte"
+        file: "data/page-feiern.json"
+        format: json
+        fields:
+          - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
+          - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "🖼️ Bild Service/Leistungen", name: service_bild, widget: image, required: false }
+
+  # ── KULINARIK ──────────────────────────────────────────────
+  - name: kulinarik
+    label: "🍽️ Kulinarik"
+    files:
+      - name: bilder
+        label: "Bilder & Texte"
+        file: "data/page-kulinarik.json"
+        format: json
+        fields:
+          - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
+          - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "🖼️ Bild Philosophie/Küche", name: philosophie_bild, widget: image, required: false }
+          - { label: "🖼️ Bild Sonderwünsche/Torte", name: wuensche_bild, widget: image, required: false }
+
+  # ── RÄUMLICHKEITEN ─────────────────────────────────────────
+  - name: raeumlichkeiten
+    label: "🏛️ Räumlichkeiten"
+    files:
+      - name: bilder
+        label: "Bilder & Texte"
+        file: "data/page-raeumlichkeiten.json"
+        format: json
+        fields:
+          - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
+          - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "🖼️ Bild Festsaal", name: festsaal_bild, widget: image, required: false }
+          - { label: "🖼️ Bild Terrasse/Garten", name: terrasse_bild, widget: image, required: false }
+
+  # ── ÜBER UNS ───────────────────────────────────────────────
+  - name: ueberuns
+    label: "👤 Über uns"
+    files:
+      - name: bilder
+        label: "Bilder"
+        file: "data/page-ueberuns.json"
+        format: json
+        fields:
+          - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
+          - { label: "🖼️ Bild Geschichte/Location", name: geschichte_bild, widget: image, required: false }
+          - { label: "🖼️ Bild Lage/Panorama", name: lage_bild, widget: image, required: false }
+
+  # ── TEAM ───────────────────────────────────────────────────
+  - name: team
+    label: "👥 Team"
+    files:
+      - name: mitglieder
+        label: "Teammitglieder bearbeiten"
+        file: "data/team.json"
+        format: json
+        fields:
+          - label: "Teammitglieder"
+            name: mitglieder
+            widget: list
+            label_singular: "Person"
+            summary: "{{name}} ({{rolle}})"
+            fields:
+              - { label: "Foto", name: bild, widget: image, required: false }
+              - { label: "Name", name: name, widget: string }
+              - { label: "Position / Rolle", name: rolle, widget: string }
+              - { label: "Zitat", name: zitat, widget: text }
+
+  # ── GALERIE ────────────────────────────────────────────────
+  - name: galerie
+    label: "🖼️ Galerie"
+    files:
+      - name: bilder
+        label: "Galeriebilder verwalten"
+        file: "data/galerie.json"
+        format: json
+        fields:
+          - label: "Bilder"
+            name: bilder
+            widget: list
+            label_singular: "Bild"
+            summary: "{{kategorie}} – {{alt}}"
+            fields:
+              - { label: "Bild hochladen", name: bild, widget: image }
+              - label: "Kategorie"
+                name: kategorie
+                widget: select
+                options:
+                  - { label: "Hochzeiten", value: "hochzeiten" }
+                  - { label: "Events & Feiern", value: "events" }
+                  - { label: "Räumlichkeiten", value: "raeume" }
+                  - { label: "Außenbereich", value: "aussen" }
+                  - { label: "Kulinarik", value: "kulinarik" }
+              - { label: "Bildbeschreibung (Alt-Text)", name: alt, widget: string }
+              - { label: "Breites Format (doppelte Breite)", name: breit, widget: boolean, default: false }
 
   # ── PREISE ────────────────────────────────────────────────
   - name: preise
@@ -65,10 +181,10 @@ collections:
             fields:
               - { label: "Icon (Emoji)", name: icon, widget: string, hint: "z.B. 🌿 ✨ 👑" }
               - { label: "Paketname", name: name, widget: string }
-              - { label: "Preis / Info-Zeile", name: price, widget: string, hint: "z.B. Auf Anfrage · ab 80 Personen" }
+              - { label: "Preis / Info-Zeile", name: price, widget: string }
               - { label: "Als empfohlen hervorheben?", name: featured, widget: boolean, default: false }
-              - { label: "Badge-Text", name: badge, widget: string, required: false, hint: "z.B. Beliebteste Wahl — leer lassen für kein Badge" }
-              - label: "Leistungen (Liste)"
+              - { label: "Badge-Text", name: badge, widget: string, required: false }
+              - label: "Leistungen"
                 name: features
                 widget: list
                 summary: "{{fields.feature}}"
@@ -79,7 +195,7 @@ collections:
     label: "❓ Häufige Fragen"
     files:
       - name: fragen
-        label: "Fragen & Antworten bearbeiten"
+        label: "Fragen & Antworten"
         file: "data/faq.json"
         format: json
         fields:
@@ -87,10 +203,10 @@ collections:
             name: kategorien
             widget: list
             label_singular: "Kategorie"
-            summary: "{{heading}} ({{label}})"
+            summary: "{{heading}}"
             fields:
-              - { label: "Kategorie-Label (klein, oben)", name: label, widget: string, hint: "z.B. Allgemeines" }
-              - { label: "Kategorie-Überschrift", name: heading, widget: string, hint: "z.B. Allgemeine Fragen" }
+              - { label: "Kategorie-Label", name: label, widget: string }
+              - { label: "Überschrift", name: heading, widget: string }
               - label: "Fragen"
                 name: fragen
                 widget: list
@@ -115,27 +231,7 @@ collections:
             label_singular: "Bewertung"
             summary: "⭐ {{author}} – {{date}}"
             fields:
-              - { label: "Name des Gastes", name: author, widget: string, hint: "z.B. Anna & Markus K." }
+              - { label: "Name des Gastes", name: author, widget: string }
               - { label: "Datum", name: date, widget: string, hint: "z.B. September 2024" }
               - { label: "Bewertungstext", name: text, widget: text }
               - { label: "Sterne (1–5)", name: stars, widget: number, value_type: int, min: 1, max: 5, default: 5 }
-
-  # ── TEAM ─────────────────────────────────────────────────
-  - name: team
-    label: "👥 Team"
-    files:
-      - name: mitglieder
-        label: "Teammitglieder bearbeiten"
-        file: "data/team.json"
-        format: json
-        fields:
-          - label: "Teammitglieder"
-            name: mitglieder
-            widget: list
-            label_singular: "Person"
-            summary: "{{name}} ({{rolle}})"
-            fields:
-              - { label: "Foto", name: bild, widget: image, required: false, hint: "Teamfoto der Person" }
-              - { label: "Name", name: name, widget: string }
-              - { label: "Position / Rolle", name: rolle, widget: string, hint: "z.B. Inhaber / Betriebsleitung" }
-              - { label: "Zitat", name: zitat, widget: text, hint: "Kurzes persönliches Zitat der Person" }

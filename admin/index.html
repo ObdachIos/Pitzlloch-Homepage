@@ -10,8 +10,6 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
   (function () {
-
-    /* CSS der Website + Google Fonts in die Vorschau laden */
     CMS.registerPreviewStyle('/css/style.css');
     CMS.registerPreviewStyle(
       'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap'
@@ -19,95 +17,202 @@
 
     const h = React.createElement;
 
-    /* Hilfsfunktion: Daten aus entry lesen (v2 + v3 kompatibel) */
     function getData(entry) {
       try {
         if (entry && entry.data) return entry.data;
         if (entry && typeof entry.getIn === 'function') return entry.getIn(['data']).toJS();
-      } catch (e) {}
+      } catch(e) {}
       return {};
     }
 
-    /* Gemeinsame Stile */
-    const S = {
-      wrap:    { fontFamily: 'Inter, sans-serif', padding: '2rem', background: '#f5f0e8', minHeight: '100vh' },
-      label:   { fontSize: '.75rem', letterSpacing: '.15em', textTransform: 'uppercase', color: '#c9a96e', marginBottom: '.25rem', display: 'block' },
-      heading: { fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, color: '#1a2f27' },
-      card:    { background: '#fff', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 2px 12px rgba(0,0,0,.06)' },
-      gold:    '#c9a96e',
-      green:   '#1a2f27',
-      cream:   '#f5f0e8',
+    const C = {
+      gold: '#c9a96e', green: '#1a2f27', cream: '#f5f0e8',
+      label: { fontSize: '.72rem', letterSpacing: '.18em', textTransform: 'uppercase', color: '#c9a96e', display: 'block', marginBottom: '.3rem' },
+      heading: { fontFamily: '"Cormorant Garamond", serif', fontWeight: 400, color: '#1a2f27', lineHeight: 1.2 },
     };
 
-    /* ── EINSTELLUNGEN ─────────────────────────────────── */
+    /* ── Seitenbanner-Vorschau (für alle Unterseiten) ────── */
+    function PageHeroPreview({ bild, untertitel, label, titel }) {
+      const bg = bild
+        ? { backgroundImage: `linear-gradient(rgba(10,25,18,.55),rgba(10,25,18,.55)),url(${bild})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+        : { background: C.green };
+      return h('section', { style: { ...bg, minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '4rem 2rem' } },
+        h('div', {},
+          h('span', { style: C.label }, label),
+          h('h1', { style: { ...C.heading, fontSize: '3.5rem', color: C.cream, margin: '.3rem 0' } }, titel),
+          untertitel && h('p', { style: { color: 'rgba(245,240,232,.78)', maxWidth: '560px', lineHeight: 1.7, marginTop: '.75rem', fontFamily: 'Inter, sans-serif', fontSize: '.95rem' } }, untertitel)
+        )
+      );
+    }
+
+    /* ── STARTSEITE ─────────────────────────────────────── */
+    function StartseitPreview({ entry }) {
+      const d = getData(entry);
+      const bg = d.image
+        ? { backgroundImage: `linear-gradient(rgba(10,25,18,.58),rgba(10,25,18,.58)),url(${d.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+        : { background: C.green };
+      return h('section', { style: { ...bg, minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '4rem 2rem', fontFamily: 'Inter, sans-serif' } },
+        h('div', {},
+          h('span', { style: { fontSize: '.75rem', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,240,232,.6)', display: 'block', marginBottom: '.5rem' } }, d.welcome),
+          h('h1', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '5.5rem', fontWeight: 300, color: C.cream, margin: '0 0 .25rem', lineHeight: 1 } }, d.title),
+          h('p', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.6rem', fontStyle: 'italic', color: 'rgba(245,240,232,.8)', margin: '0 0 1.5rem' } }, d.subtitle),
+          h('p', { style: { color: 'rgba(245,240,232,.65)', maxWidth: '500px', lineHeight: 1.8, fontSize: '.92rem' } }, d.description),
+          h('div', { style: { marginTop: '2rem', display: 'flex', gap: '.75rem', justifyContent: 'center', flexWrap: 'wrap' } },
+            h('span', { style: { background: C.gold, color: '#fff', padding: '.65rem 1.5rem', borderRadius: '6px', fontSize: '.88rem', fontWeight: 500 } }, 'Termin anfragen'),
+            h('span', { style: { border: '1.5px solid rgba(245,240,232,.5)', color: C.cream, padding: '.65rem 1.5rem', borderRadius: '6px', fontSize: '.88rem' } }, 'Traumhochzeiten')
+          )
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('startseite', StartseitPreview);
+
+    /* ── HOCHZEITEN ─────────────────────────────────────── */
+    function HochzeitenPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { fontFamily: 'Inter, sans-serif' } },
+        PageHeroPreview({ bild: d.hero_bild, untertitel: d.hero_untertitel, label: 'Traumhochzeiten', titel: 'Hochzeiten im Pitzlloch' }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '1.5rem', background: C.cream } },
+          BildCard(d.festsaal_bild, 'Festsaal'),
+          BildCard(d.aussen_bild, 'Außenbereich')
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('hochzeiten', HochzeitenPreview);
+
+    /* ── FEIERN ─────────────────────────────────────────── */
+    function FeiernPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { fontFamily: 'Inter, sans-serif' } },
+        PageHeroPreview({ bild: d.hero_bild, untertitel: d.hero_untertitel, label: 'Private & Business Events', titel: 'Feiern & Events' }),
+        h('div', { style: { padding: '1.5rem', background: C.cream } },
+          BildCard(d.service_bild, 'Service / Leistungen')
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('feiern', FeiernPreview);
+
+    /* ── KULINARIK ──────────────────────────────────────── */
+    function KulinarikPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { fontFamily: 'Inter, sans-serif' } },
+        PageHeroPreview({ bild: d.hero_bild, untertitel: d.hero_untertitel, label: 'Genuss & Gastronomie', titel: 'Kulinarik im Pitzlloch' }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '1.5rem', background: C.cream } },
+          BildCard(d.philosophie_bild, 'Küche / Philosophie'),
+          BildCard(d.wuensche_bild, 'Sonderwünsche / Torte')
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('kulinarik', KulinarikPreview);
+
+    /* ── RÄUMLICHKEITEN ─────────────────────────────────── */
+    function RaeumePreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { fontFamily: 'Inter, sans-serif' } },
+        PageHeroPreview({ bild: d.hero_bild, untertitel: d.hero_untertitel, label: 'Veranstaltungsstätte', titel: 'Räumlichkeiten' }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '1.5rem', background: C.cream } },
+          BildCard(d.festsaal_bild, 'Festsaal'),
+          BildCard(d.terrasse_bild, 'Terrasse & Garten')
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('raeumlichkeiten', RaeumePreview);
+
+    /* ── ÜBER UNS ───────────────────────────────────────── */
+    function UeberUnsPreview({ entry }) {
+      const d = getData(entry);
+      return h('div', { style: { fontFamily: 'Inter, sans-serif' } },
+        PageHeroPreview({ bild: d.hero_bild, untertitel: '', label: 'Unsere Geschichte', titel: 'Über uns' }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '1.5rem', background: C.cream } },
+          BildCard(d.geschichte_bild, 'Geschichte / Location'),
+          BildCard(d.lage_bild, 'Lage / Panorama')
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('ueberuns', UeberUnsPreview);
+
+    /* ── GALERIE ────────────────────────────────────────── */
+    function GaleriePreview({ entry }) {
+      const d = getData(entry);
+      const bilder = (d.bilder || []).filter(b => b.bild);
+      return h('div', { style: { padding: '1.5rem', background: C.cream, fontFamily: 'Inter, sans-serif' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', marginBottom: '1rem' } }, `🖼️ Galerie – ${bilder.length} Bild${bilder.length !== 1 ? 'er' : ''}`),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '.75rem' } },
+          ...bilder.map((b, i) =>
+            h('div', { key: i, style: { borderRadius: '8px', overflow: 'hidden', position: 'relative' } },
+              h('img', { src: b.bild, alt: b.alt, style: { width: '100%', height: '140px', objectFit: 'cover', display: 'block' } }),
+              h('div', { style: { background: 'rgba(0,0,0,.55)', color: '#fff', fontSize: '.72rem', padding: '.3rem .5rem', position: 'absolute', bottom: 0, left: 0, right: 0 } }, b.kategorie)
+            )
+          )
+        ),
+        bilder.length === 0 && h('p', { style: { color: '#888', fontStyle: 'italic' } }, 'Noch keine Bilder hochgeladen.')
+      );
+    }
+    CMS.registerPreviewTemplate('galerie', GaleriePreview);
+
+    /* ── EINSTELLUNGEN ──────────────────────────────────── */
     function EinstellungenPreview({ entry }) {
       const d = getData(entry);
-      return h('div', { style: S.wrap },
-        h('h2', { style: { ...S.heading, fontSize: '1.8rem', marginBottom: '1.5rem' } }, '⚙️ Kontaktdaten – Vorschau'),
-        h('div', { style: { ...S.card, display: 'grid', gap: '.75rem', maxWidth: '480px' } },
-          row('📞 Telefon', d.phone_display),
-          row('✉️ E-Mail', d.email),
-          row('📍 Adresse', `${d.address1 || ''}, ${d.address2 || ''}`),
-          h('hr', { style: { border: 'none', borderTop: '1px solid #eee', margin: '.25rem 0' } }),
-          row('🕐 Mo–Fr', d.hours_weekday),
-          row('🕐 Samstag', d.hours_saturday),
-          row('🕐 Sonntag', d.hours_sunday),
-          h('hr', { style: { border: 'none', borderTop: '1px solid #eee', margin: '.25rem 0' } }),
-          row('⭐ Bewertung', `${d.rating || ''} Sterne (${d.review_count || ''} Rezensionen)`),
+      return h('div', { style: { padding: '2rem', fontFamily: 'Inter, sans-serif', background: C.cream, minHeight: '100vh' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', marginBottom: '1.25rem' } }, '⚙️ Kontaktdaten'),
+        h('div', { style: { background: '#fff', borderRadius: '12px', padding: '1.5rem', display: 'grid', gap: '.7rem', maxWidth: '460px' } },
+          row('📞', d.phone_display), row('✉️', d.email),
+          row('📍', `${d.address1 || ''}, ${d.address2 || ''}`),
+          h('hr', { style: { border: 'none', borderTop: '1px solid #eee' } }),
+          row('🕐 Mo–Fr', d.hours_weekday), row('🕐 Sa', d.hours_saturday), row('🕐 So', d.hours_sunday),
+          h('hr', { style: { border: 'none', borderTop: '1px solid #eee' } }),
+          row('⭐ Bewertung', `${d.rating || ''} (${d.review_count || ''} Rez.)`),
           row('👥 Max. Gäste', d.max_guests),
         )
       );
-      function row(label, val) {
-        return h('div', { style: { display: 'flex', gap: '.75rem', fontSize: '.9rem' } },
-          h('span', { style: { minWidth: '140px', color: '#888' } }, label),
+      function row(lbl, val) {
+        return h('div', { style: { display: 'flex', gap: '.75rem', fontSize: '.88rem' } },
+          h('span', { style: { minWidth: '130px', color: '#888' } }, lbl),
           h('span', { style: { fontWeight: 500 } }, val || '–')
         );
       }
     }
     CMS.registerPreviewTemplate('einstellungen', EinstellungenPreview);
 
-    /* ── STARTSEITE / HERO ─────────────────────────────── */
-    function StartseitPreview({ entry }) {
+    /* ── BEWERTUNGEN ────────────────────────────────────── */
+    function BewertungenPreview({ entry }) {
       const d = getData(entry);
-      return h('div', { style: { position: 'relative', minHeight: '70vh', background: S.green, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' } },
-        d.image && h('img', { src: d.image, alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: .35 } }),
-        h('div', { style: { position: 'relative', zIndex: 1, textAlign: 'center', color: S.cream, padding: '3rem 2rem' } },
-          h('span', { style: { ...S.label, color: 'rgba(245,240,232,.65)' } }, d.welcome),
-          h('h1', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '5rem', fontWeight: 300, margin: '.2rem 0', lineHeight: 1, color: S.cream } }, d.title),
-          h('p', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.5rem', fontStyle: 'italic', opacity: .8 } }, d.subtitle),
-          h('p', { style: { opacity: .65, marginTop: '1.5rem', maxWidth: '500px', lineHeight: 1.7 } }, d.description)
+      const reviews = d.reviews || [];
+      return h('div', { style: { padding: '1.5rem', background: '#e8e4dc', fontFamily: 'Inter, sans-serif' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', textAlign: 'center', marginBottom: '1.5rem' } }, `⭐ ${reviews.length} Bewertung${reviews.length !== 1 ? 'en' : ''}`),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' } },
+          ...reviews.map((r, i) =>
+            h('div', { key: i, style: { background: '#fff', padding: '1.25rem', borderRadius: '12px' } },
+              h('div', { style: { color: C.gold, marginBottom: '.5rem' } }, '★'.repeat(Math.min(r.stars || 5, 5))),
+              h('p', { style: { fontSize: '.87rem', fontStyle: 'italic', lineHeight: 1.7, marginBottom: '.75rem', color: '#444' } }, `„${r.text}"`),
+              h('div', { style: { fontWeight: 600, fontSize: '.83rem' } }, r.author),
+              h('div', { style: { fontSize: '.78rem', color: '#999' } }, r.date)
+            )
+          )
         )
       );
     }
-    CMS.registerPreviewTemplate('startseite', StartseitPreview);
+    CMS.registerPreviewTemplate('bewertungen', BewertungenPreview);
 
-    /* ── PREISE ────────────────────────────────────────── */
+    /* ── PREISE ─────────────────────────────────────────── */
     function PreisePreview({ entry }) {
       const d = getData(entry);
       const pakete = d.pakete || [];
-      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
-        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, '💰 Pakete – Vorschau'),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem' } },
+      return h('div', { style: { padding: '1.5rem', background: '#e8e4dc', fontFamily: 'Inter, sans-serif' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', textAlign: 'center', marginBottom: '1.5rem' } }, '💰 Pakete'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1.25rem' } },
           ...pakete.map((p, i) =>
-            h('div', { key: i, style: {
-              background: p.featured ? S.green : '#fff',
-              color: p.featured ? S.cream : S.green,
-              padding: '2rem', borderRadius: '16px', position: 'relative',
-              boxShadow: p.featured ? `0 8px 30px rgba(26,47,39,.3)` : '0 2px 12px rgba(0,0,0,.06)'
-            }},
-              p.badge && h('div', { style: { position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: S.gold, color: '#fff', fontSize: '.75rem', padding: '.3rem .9rem', borderRadius: '20px', whiteSpace: 'nowrap' } }, p.badge),
-              h('div', { style: { fontSize: '2rem', marginBottom: '.4rem' } }, p.icon),
-              h('div', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.7rem', fontWeight: 400 } }, p.name),
-              h('div', { style: { fontSize: '.82rem', opacity: .65, margin: '.4rem 0 1.25rem' } }, p.price),
-              h('ul', { style: { listStyle: 'none', padding: 0, margin: '0 0 1.5rem', fontSize: '.85rem' } },
+            h('div', { key: i, style: { background: p.featured ? C.green : '#fff', color: p.featured ? C.cream : C.green, padding: '1.75rem', borderRadius: '14px', position: 'relative' } },
+              p.badge && h('div', { style: { position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: C.gold, color: '#fff', fontSize: '.72rem', padding: '.25rem .8rem', borderRadius: '20px', whiteSpace: 'nowrap' } }, p.badge),
+              h('div', { style: { fontSize: '1.8rem', marginBottom: '.3rem' } }, p.icon),
+              h('div', { style: { fontFamily: '"Cormorant Garamond", serif', fontSize: '1.5rem' } }, p.name),
+              h('div', { style: { fontSize: '.8rem', opacity: .6, margin: '.35rem 0 1rem' } }, p.price),
+              h('ul', { style: { listStyle: 'none', padding: 0, margin: 0, fontSize: '.82rem' } },
                 ...(p.features || []).map((f, j) =>
-                  h('li', { key: j, style: { padding: '.35rem 0', borderBottom: `1px solid ${p.featured ? 'rgba(245,240,232,.12)' : '#f0ebe4'}`, display: 'flex', gap: '.5rem' } },
-                    h('span', { style: { color: S.gold, flexShrink: 0 } }, '✓'),
-                    f
+                  h('li', { key: j, style: { padding: '.3rem 0', borderBottom: `1px solid ${p.featured ? 'rgba(245,240,232,.12)' : '#f0ebe4'}`, display: 'flex', gap: '.4rem' } },
+                    h('span', { style: { color: C.gold } }, '✓'), f
                   )
                 )
-              ),
-              h('div', { style: { background: p.featured ? S.gold : 'transparent', border: `2px solid ${p.featured ? S.gold : S.green}`, color: p.featured ? '#fff' : S.green, padding: '.65rem', borderRadius: '8px', textAlign: 'center', fontSize: '.88rem', fontWeight: 500 } }, 'Angebot anfragen')
+              )
             )
           )
         )
@@ -115,21 +220,20 @@
     }
     CMS.registerPreviewTemplate('preise', PreisePreview);
 
-    /* ── FAQ ───────────────────────────────────────────── */
+    /* ── FAQ ────────────────────────────────────────────── */
     function FaqPreview({ entry }) {
       const d = getData(entry);
-      const kategorien = d.kategorien || [];
-      return h('div', { style: { ...S.wrap, maxWidth: '780px', margin: '0 auto' } },
-        h('h2', { style: { ...S.heading, fontSize: '1.8rem', marginBottom: '2rem' } }, '❓ FAQ – Vorschau'),
-        ...kategorien.map((kat, ki) =>
-          h('div', { key: ki, style: { marginBottom: '2.5rem' } },
-            h('span', { style: S.label }, kat.label),
-            h('h3', { style: { ...S.heading, fontSize: '1.5rem', marginBottom: '1rem' } }, kat.heading),
-            h('div', { style: { ...S.card, padding: 0, overflow: 'hidden' } },
+      return h('div', { style: { padding: '1.5rem', background: C.cream, fontFamily: 'Inter, sans-serif', maxWidth: '760px', margin: '0 auto' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', marginBottom: '1.5rem' } }, '❓ FAQ'),
+        ...(d.kategorien || []).map((kat, ki) =>
+          h('div', { key: ki, style: { marginBottom: '2rem' } },
+            h('span', { style: C.label }, kat.label),
+            h('h3', { style: { ...C.heading, fontSize: '1.3rem', marginBottom: '.75rem' } }, kat.heading),
+            h('div', { style: { background: '#fff', borderRadius: '10px', overflow: 'hidden' } },
               ...(kat.fragen || []).map((f, fi) =>
-                h('div', { key: fi, style: { padding: '1rem 1.5rem', borderBottom: fi < kat.fragen.length - 1 ? '1px solid #f0ebe4' : 'none' } },
-                  h('p', { style: { fontWeight: 600, fontSize: '.9rem', marginBottom: '.4rem', color: S.green } }, f.frage),
-                  h('p', { style: { fontSize: '.85rem', color: '#555', lineHeight: 1.7, margin: 0 } }, f.antwort)
+                h('div', { key: fi, style: { padding: '.9rem 1.25rem', borderBottom: fi < kat.fragen.length - 1 ? '1px solid #f0ebe4' : 'none' } },
+                  h('p', { style: { fontWeight: 600, fontSize: '.88rem', marginBottom: '.3rem', color: C.green } }, f.frage),
+                  h('p', { style: { fontSize: '.82rem', color: '#666', lineHeight: 1.65, margin: 0 } }, f.antwort)
                 )
               )
             )
@@ -139,42 +243,21 @@
     }
     CMS.registerPreviewTemplate('faq', FaqPreview);
 
-    /* ── BEWERTUNGEN ───────────────────────────────────── */
-    function BewertungenPreview({ entry }) {
-      const d = getData(entry);
-      const reviews = d.reviews || [];
-      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
-        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, `⭐ ${reviews.length} Bewertung${reviews.length !== 1 ? 'en' : ''}`),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' } },
-          ...reviews.map((r, i) =>
-            h('div', { key: i, style: { ...S.card } },
-              h('div', { style: { color: S.gold, fontSize: '1.1rem', marginBottom: '.6rem' } }, '★'.repeat(Math.min(r.stars || 5, 5))),
-              h('p', { style: { fontSize: '.88rem', fontStyle: 'italic', lineHeight: 1.7, color: '#444', marginBottom: '1rem' } }, `„${r.text}"`),
-              h('div', { style: { fontWeight: 600, fontSize: '.85rem' } }, r.author),
-              h('div', { style: { fontSize: '.8rem', color: '#999' } }, r.date)
-            )
-          )
-        )
-      );
-    }
-    CMS.registerPreviewTemplate('bewertungen', BewertungenPreview);
-
-    /* ── TEAM ──────────────────────────────────────────── */
+    /* ── TEAM ───────────────────────────────────────────── */
     function TeamPreview({ entry }) {
       const d = getData(entry);
-      const mitglieder = d.mitglieder || [];
-      return h('div', { style: { ...S.wrap, background: '#e8e4dc' } },
-        h('h2', { style: { ...S.heading, fontSize: '1.8rem', textAlign: 'center', marginBottom: '2rem' } }, '👥 Team – Vorschau'),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' } },
-          ...mitglieder.map((m, i) =>
-            h('div', { key: i, style: { ...S.card, padding: 0, overflow: 'hidden', textAlign: 'center' } },
+      return h('div', { style: { padding: '1.5rem', background: '#e8e4dc', fontFamily: 'Inter, sans-serif' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.6rem', textAlign: 'center', marginBottom: '1.5rem' } }, '👥 Team'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' } },
+          ...(d.mitglieder || []).map((m, i) =>
+            h('div', { key: i, style: { background: '#fff', borderRadius: '12px', overflow: 'hidden', textAlign: 'center' } },
               m.bild
-                ? h('img', { src: m.bild, alt: m.name, style: { width: '100%', height: '220px', objectFit: 'cover' } })
-                : h('div', { style: { width: '100%', height: '220px', background: S.cream, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', color: '#ccc' } }, '👤'),
-              h('div', { style: { padding: '1.25rem' } },
-                h('h4', { style: { margin: '0 0 .2rem', fontSize: '1.1rem', color: S.green } }, m.name),
-                h('span', { style: S.label }, m.rolle),
-                h('p', { style: { fontSize: '.85rem', fontStyle: 'italic', fontFamily: '"Cormorant Garamond", serif', color: '#666', marginTop: '.5rem' } }, `„${m.zitat}"`)
+                ? h('img', { src: m.bild, alt: m.name, style: { width: '100%', height: '200px', objectFit: 'cover' } })
+                : h('div', { style: { width: '100%', height: '200px', background: C.cream, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', color: '#ccc' } }, '👤'),
+              h('div', { style: { padding: '1rem' } },
+                h('h4', { style: { margin: '0 0 .2rem', color: C.green } }, m.name),
+                h('span', { style: C.label }, m.rolle),
+                h('p', { style: { fontSize: '.83rem', fontStyle: 'italic', fontFamily: '"Cormorant Garamond", serif', color: '#666', marginTop: '.4rem' } }, `„${m.zitat}"`)
               )
             )
           )
@@ -182,6 +265,18 @@
       );
     }
     CMS.registerPreviewTemplate('team', TeamPreview);
+
+    /* Hilfsfunktion: Bildkarte */
+    function BildCard(src, label) {
+      return h('div', { style: { borderRadius: '10px', overflow: 'hidden', background: '#fff' } },
+        src
+          ? h('img', { src, alt: label, style: { width: '100%', height: '200px', objectFit: 'cover', display: 'block' } })
+          : h('div', { style: { width: '100%', height: '200px', background: '#e8e4dc', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', fontSize: '.85rem', flexDirection: 'column', gap: '.5rem' } },
+              h('span', { style: { fontSize: '2rem' } }, '🖼️'),
+              h('span', {}, label + ' – noch kein Bild')
+            )
+      );
+    }
 
   })();
   </script>

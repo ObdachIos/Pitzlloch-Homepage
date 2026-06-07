@@ -1,0 +1,19 @@
+{
+  "bilder": [
+    { "bild": "", "kategorie": "hochzeiten", "alt": "Hochzeit Pitzlloch Chiemgau", "breit": true },
+    { "bild": "", "kategorie": "hochzeiten", "alt": "Brautpaar Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "raeume", "alt": "Festsaal Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "hochzeiten", "alt": "Trauung Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "aussen", "alt": "Garten Pitzlloch Chiemgau", "breit": false },
+    { "bild": "", "kategorie": "events", "alt": "Event Pitzlloch", "breit": true },
+    { "bild": "", "kategorie": "kulinarik", "alt": "Catering Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "raeume", "alt": "Raumgestaltung Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "hochzeiten", "alt": "Tanz Hochzeit Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "aussen", "alt": "Terrasse Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "events", "alt": "Geburtstagsfeier Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "hochzeiten", "alt": "Hochzeit Außenbereich Pitzlloch", "breit": true },
+    { "bild": "", "kategorie": "kulinarik", "alt": "Speisen Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "raeume", "alt": "Eingang Pitzlloch", "breit": false },
+    { "bild": "", "kategorie": "aussen", "alt": "Abend Garten Pitzlloch", "breit": false }
+  ]
+}

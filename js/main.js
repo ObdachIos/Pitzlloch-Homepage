@@ -423,11 +423,104 @@
     if (el) el.textContent = value;
   }
 
+  /* Hilfsfunktion: Bild in Container einsetzen */
+  function setImg(containerId, src, alt) {
+    if (!src) return;
+    const wrap = document.getElementById(containerId);
+    if (!wrap) return;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt || '';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    img.loading = 'lazy';
+    wrap.innerHTML = '';
+    wrap.appendChild(img);
+  }
+
+  /* --------------------------------------------------
+     10b. Seiten-spezifischen Content laden
+  -------------------------------------------------- */
+  async function loadPageContent() {
+    const page = location.pathname.split('/').pop().replace('.html', '') || 'index';
+
+    const pageMap = {
+      hochzeiten:      '/data/page-hochzeiten.json',
+      'feiern-events': '/data/page-feiern.json',
+      kulinarik:       '/data/page-kulinarik.json',
+      raeumlichkeiten: '/data/page-raeumlichkeiten.json',
+      'ueber-uns':     '/data/page-ueberuns.json',
+      galerie:         '/data/galerie.json',
+    };
+
+    const url = pageMap[page];
+    if (!url) return;
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return;
+      const d = await res.json();
+
+      /* Hero-Bild (alle Unterseiten) */
+      if (d.hero_bild) setImg('page-hero-bg', d.hero_bild, 'Pitzlloch');
+      if (d.hero_untertitel) {
+        const el = document.getElementById('page-hero-sub');
+        if (el) el.textContent = d.hero_untertitel;
+      }
+
+      /* Hochzeiten */
+      if (page === 'hochzeiten') {
+        setImg('bild-festsaal', d.festsaal_bild, 'Festsaal Pitzlloch');
+        setImg('bild-aussen', d.aussen_bild, 'Außenbereich Pitzlloch');
+      }
+
+      /* Feiern & Events */
+      if (page === 'feiern-events') {
+        setImg('bild-service', d.service_bild, 'Service Pitzlloch');
+      }
+
+      /* Kulinarik */
+      if (page === 'kulinarik') {
+        setImg('bild-philosophie', d.philosophie_bild, 'Küche Pitzlloch');
+        setImg('bild-wuensche', d.wuensche_bild, 'Sonderwünsche Pitzlloch');
+      }
+
+      /* Räumlichkeiten */
+      if (page === 'raeumlichkeiten') {
+        setImg('bild-festsaal', d.festsaal_bild, 'Festsaal Pitzlloch');
+        setImg('bild-terrasse', d.terrasse_bild, 'Terrasse Pitzlloch');
+      }
+
+      /* Über uns */
+      if (page === 'ueber-uns') {
+        setImg('bild-geschichte', d.geschichte_bild, 'Geschichte Pitzlloch');
+        setImg('bild-lage', d.lage_bild, 'Lage Pitzlloch');
+      }
+
+      /* Galerie */
+      if (page === 'galerie' && d.bilder?.length) {
+        const grid = document.getElementById('galerie-grid');
+        if (grid) {
+          grid.innerHTML = d.bilder
+            .filter(b => b.bild)
+            .map(b => `
+              <div class="gal-item${b.breit ? ' wide' : ''}" data-cat="${b.kategorie}" data-src="${b.bild}" data-alt="${b.alt}">
+                <img src="${b.bild}" alt="${b.alt}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+                <div class="gal-overlay"><span class="gal-zoom">⊕</span></div>
+              </div>`).join('');
+          initGallery();
+        }
+      }
+    } catch (e) {
+      console.warn('Seiten-Content laden fehlgeschlagen:', e);
+    }
+  }
+
   /* --------------------------------------------------
      11. Init
   -------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
     loadContent();
+    loadPageContent();
     initFadeIn();
     initAccordion();
     initGallery();
