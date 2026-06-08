@@ -330,8 +330,8 @@ collections:
             label_singular: "Buchung"
             summary: "{{von}} – {{bis}} ({{label}})"
             fields:
-              - { label: "Von (Datum)", name: von, widget: date, format: "YYYY-MM-DD", hint: "Startdatum der Buchung" }
-              - { label: "Bis (Datum)", name: bis, widget: date, format: "YYYY-MM-DD", hint: "Enddatum der Buchung (= Von wenn nur 1 Tag)" }
+              - { label: "Von (Datum)", name: von, widget: datetime, date_format: "DD.MM.YYYY", time_format: false, format: "YYYY-MM-DD", hint: "Startdatum der Buchung" }
+              - { label: "Bis (Datum)", name: bis, widget: datetime, date_format: "DD.MM.YYYY", time_format: false, format: "YYYY-MM-DD", hint: "Enddatum der Buchung (= Von wenn nur 1 Tag)" }
               - { label: "Bezeichnung (intern, wird nicht angezeigt)", name: label, widget: string, required: false, hint: "z.B. 'Hochzeit Familie Müller' – nur für Sie sichtbar" }
               - label: "Darstellung"
                 name: typ
