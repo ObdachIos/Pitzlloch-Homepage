@@ -488,6 +488,7 @@ body:not(.hero-page) #site-header .hamburger span { background: var(--charcoal) 
   box-shadow: var(--shadow-sm); transition: box-shadow var(--trans-med), transform var(--trans-med);
 }
 .card:hover { box-shadow: var(--shadow-md); transform: translateY(-5px); }
+.card-image { display: block; width: 100%; height: 280px; object-fit: cover; }
 .card-body  { padding: var(--sp-md); }
 .card-label { font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; display: block; }
 .card-title { font-family: var(--font-heading); font-size: 1.6rem; color: var(--green-dark); margin-bottom: .6rem; }
