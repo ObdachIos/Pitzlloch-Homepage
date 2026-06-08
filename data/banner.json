@@ -1,6 +1,6 @@
 {
   "aktiv": true,
-  "typ": "warnung",
+  "typ": "info",
   "text": "Die neue Webseite ist da!!!",
   "link_text": "Jetzt anfragen",
   "link_url": "/kontakt.html"
