@@ -846,10 +846,10 @@ textarea { resize: vertical; min-height: 115px; }
 }
 .kal-cell.empty    { background: transparent; }
 .kal-cell.past     { color: #ccc; background: #f8f6f2; }
-.kal-cell.frei     { background: rgba(45,74,62,.08); color: var(--green); }
+.kal-cell.frei     { background: #2D6B4F; color: #fff; font-weight: 600; border-radius: 4px; }
 .kal-cell.belegt   { background: #8B2E2E; color: #fff; font-weight: 700; border-radius: 4px; }
-.kal-cell.event    { background: var(--gold); color: var(--green-dark); font-weight: 700; border-radius: 4px; }
-.kal-cell.option   { background: rgba(196,163,90,.28); color: #7A5220; font-weight: 600; border: 1.5px dashed var(--gold); }
+.kal-cell.event    { background: #B8882A; color: #fff; font-weight: 700; border-radius: 4px; }
+.kal-cell.option   { background: rgba(196,163,90,.45); color: #5C3D0A; font-weight: 700; border: 2px dashed #B8882A; border-radius: 4px; }
 
 .kal-legend {
   display: flex;
@@ -862,9 +862,9 @@ textarea { resize: vertical; min-height: 115px; }
 }
 .kal-legend-item { display: flex; align-items: center; gap: .4rem; }
 .kal-legend-dot  { width: 13px; height: 13px; border-radius: 3px; }
-.kal-legend-dot.frei   { background: rgba(45,74,62,.15); }
+.kal-legend-dot.frei   { background: #2D6B4F; }
 .kal-legend-dot.belegt { background: #8B2E2E; }
-.kal-legend-dot.event  { background: var(--gold); }
+.kal-legend-dot.event  { background: #B8882A; }
 
 @media (max-width: 600px) {
   .kal-months { grid-template-columns: 1fr; }
