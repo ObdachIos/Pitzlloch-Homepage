@@ -1,7 +1,7 @@
 {
-  "aktiv": false,
+  "aktiv": true,
   "typ": "info",
-  "text": "Die neue Webseite ist da!!!",
+  "text": "Deal or no Deal?",
   "link_text": "Jetzt anfragen",
   "link_url": "/kontakt.html"
 }
