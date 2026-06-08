@@ -28,6 +28,7 @@
     initHeader();
     initHamburger();
     initCookies(); // Nach Footer-Load, da Banner im Partial liegt
+    updateAvailChip();
   }
 
   /* --------------------------------------------------
@@ -680,6 +681,13 @@
   /* --------------------------------------------------
      11. Init
   -------------------------------------------------- */
+  function updateAvailChip() {
+    const el = document.getElementById('avail-chip-text');
+    if (!el) return;
+    const y = new Date().getFullYear();
+    el.textContent = `Termine ${y} & ${y + 1} anfragen`;
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     loadBanner();
     loadContent();
@@ -691,5 +699,7 @@
     initForms();
     initPartials(); // initCookies() wird darin nach Footer-Load aufgerufen
   });
+
+  document.addEventListener('partials-loaded', updateAvailChip);
 
 })();
