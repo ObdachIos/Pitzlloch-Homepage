@@ -7,6 +7,23 @@
   'use strict';
 
   /* --------------------------------------------------
+     0. Page Loader
+  -------------------------------------------------- */
+  (function initLoader() {
+    const loader = document.getElementById('page-loader');
+    if (!loader) return;
+    const minWait  = new Promise(r => setTimeout(r, 2200));
+    const pageLoad = new Promise(r => {
+      if (document.readyState === 'complete') r();
+      else window.addEventListener('load', r, { once: true });
+    });
+    Promise.all([minWait, pageLoad]).then(() => {
+      loader.classList.add('fade-out');
+      setTimeout(() => loader.remove(), 850);
+    });
+  })();
+
+  /* --------------------------------------------------
      1. Partials laden (Header & Footer per fetch)
   -------------------------------------------------- */
   async function fetchPartial(id, url) {
