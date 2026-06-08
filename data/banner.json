@@ -1,7 +1,7 @@
 {
   "aktiv": true,
-  "typ": "urlaub",
-  "text": "Betriebsurlaub vom 24.12. bis 06.01. – Ab 7. Januar sind wir wieder für Sie da!",
+  "typ": "warnung",
+  "text": "Die neue Webseite ist da!!!",
   "link_text": "Jetzt anfragen",
   "link_url": "/kontakt.html"
 }
