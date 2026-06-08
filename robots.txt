@@ -4,8 +4,8 @@ User-agent: *
 Allow: /
 
 # Rechtliche Seiten nicht indexieren
-Disallow: /datenschutz.html
-Disallow: /impressum.html
+Disallow: /datenschutz
+Disallow: /impressum
 
 # Partials nicht indexieren
 Disallow: /partials/
