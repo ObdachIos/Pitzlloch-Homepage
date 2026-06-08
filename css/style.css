@@ -703,8 +703,9 @@ textarea { resize: vertical; min-height: 115px; }
    ================================================================ */
 #site-banner {
   width: 100%;
-  position: relative;
-  z-index: 200;
+  position: sticky;
+  top: var(--header-h);
+  z-index: 999;
   font-size: .85rem;
   font-family: var(--font-body);
   overflow: hidden;
