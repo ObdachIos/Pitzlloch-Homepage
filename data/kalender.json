@@ -4,16 +4,16 @@
   "hinweis": "Grün = noch verfügbar · Rot = bereits belegt · Die genaue Verfügbarkeit Ihres Wunschtermins erfragen Sie am besten direkt bei uns.",
   "buchungen": [
     {
-      "von": "2025-06-21",
-      "bis": "2025-06-21",
-      "label": "Hochzeit (Beispiel)",
+      "von": "2025-06-23",
+      "bis": "2025-06-25",
+      "label": "Neue Webseite",
       "typ": "belegt"
     },
     {
-      "von": "2025-07-05",
-      "bis": "2025-07-05",
+      "von": "2025-07-27",
+      "bis": "2025-07-28",
       "label": "Firmenfeier",
-      "typ": "belegt"
+      "typ": "option"
     },
     {
       "von": "2025-07-12",
