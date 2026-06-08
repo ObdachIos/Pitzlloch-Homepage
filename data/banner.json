@@ -1,6 +1,6 @@
 {
   "aktiv": true,
-  "typ": "urlaub",
+  "typ": "event",
   "text": "Deal or no Deal?",
   "link_text": "Jetzt anfragen",
   "link_url": "/kontakt.html"
