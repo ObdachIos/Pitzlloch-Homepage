@@ -401,7 +401,7 @@ body:not(.hero-page) #site-header .hamburger span { background: var(--charcoal) 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marqueeScroll 30s linear infinite;
+  will-change: transform;
 }
 .marquee-set {
   display: flex;

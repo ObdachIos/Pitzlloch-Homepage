@@ -679,7 +679,41 @@
   }
 
   /* --------------------------------------------------
-     11. Init
+     11. Marquee – nahtlos scrollend per rAF
+  -------------------------------------------------- */
+  function initMarquee() {
+    const track = document.querySelector('.marquee-track');
+    if (!track) return;
+    const originalSet = track.querySelector('.marquee-set');
+    if (!originalSet) return;
+
+    // CSS-Animation deaktivieren
+    track.style.animation = 'none';
+
+    // Kopien hinzufügen bis Track mind. 3× Viewport breit ist
+    function fillTrack() {
+      const needed = window.innerWidth * 3;
+      while (track.scrollWidth < needed) {
+        track.appendChild(originalSet.cloneNode(true));
+      }
+    }
+    fillTrack();
+    window.addEventListener('resize', fillTrack, { passive: true });
+
+    const setWidth = () => originalSet.offsetWidth;
+    let x = 0;
+    const SPEED = 0.6; // px pro Frame (~36px/s bei 60fps)
+
+    (function tick() {
+      x -= SPEED;
+      if (x <= -setWidth()) x += setWidth();
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* --------------------------------------------------
+     12. Init
   -------------------------------------------------- */
   function updateAvailChip() {
     const el = document.getElementById('avail-chip-text');
@@ -697,6 +731,7 @@
     initAccordion();
     initGallery();
     initForms();
+    initMarquee();
     initPartials(); // initCookies() wird darin nach Footer-Load aufgerufen
   });
 
