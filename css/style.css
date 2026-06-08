@@ -397,16 +397,21 @@ body:not(.hero-page) #site-header .hamburger span { background: var(--charcoal) 
   background: var(--green-dark);
   padding: .85rem 0;
   overflow: hidden;
-  white-space: nowrap;
 }
 .marquee-track {
-  display: inline-flex;
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+.marquee-set {
+  display: flex;
   align-items: center;
   gap: 1.4rem;
-  animation: marqueeScroll 30s linear infinite;
+  padding-right: 1.4rem;
   white-space: nowrap;
+  flex-shrink: 0;
 }
-.marquee-track span {
+.marquee-set span {
   font-size: .68rem;
   font-weight: 600;
   letter-spacing: .2em;
