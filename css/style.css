@@ -646,9 +646,9 @@ textarea { resize: vertical; min-height: 115px; }
 .sticky-cta { position: fixed; right: 1.4rem; bottom: 5.5rem; display: flex; flex-direction: column; gap: .7rem; z-index: 900; }
 .sticky-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); transition: transform var(--trans-fast), box-shadow var(--trans-fast); text-decoration: none; font-size: 1.25rem; }
 .sticky-btn:hover { transform: scale(1.12); box-shadow: var(--shadow-lg); }
-.sticky-phone   { background: #E05070; color: #fff; }
-.sticky-contact { background: var(--gold); color: #fff; }
-.sticky-insta   { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; }
+.sticky-phone   { background: #4d8b72; color: #fff; }
+.sticky-contact { background: var(--gold); color: var(--green-dark); }
+.sticky-insta   { background: #4d8b72; color: #fff; }
 
 /* Footer Instagram Link */
 .footer-insta {
