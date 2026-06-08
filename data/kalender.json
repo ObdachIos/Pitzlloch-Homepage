@@ -1,0 +1,25 @@
+{
+  "aktiv": true,
+  "titel": "Verfügbarkeit auf einen Blick",
+  "hinweis": "Grün = noch verfügbar · Rot = bereits belegt · Die genaue Verfügbarkeit Ihres Wunschtermins erfragen Sie am besten direkt bei uns.",
+  "buchungen": [
+    {
+      "von": "2025-06-21",
+      "bis": "2025-06-21",
+      "label": "Hochzeit (Beispiel)",
+      "typ": "belegt"
+    },
+    {
+      "von": "2025-07-05",
+      "bis": "2025-07-05",
+      "label": "Firmenfeier",
+      "typ": "belegt"
+    },
+    {
+      "von": "2025-07-12",
+      "bis": "2025-07-13",
+      "label": "Hochzeit",
+      "typ": "belegt"
+    }
+  ]
+}

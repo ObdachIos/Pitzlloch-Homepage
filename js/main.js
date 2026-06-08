@@ -549,9 +549,106 @@
   /* --------------------------------------------------
      11. Init
   -------------------------------------------------- */
+  /* --------------------------------------------------
+     12. Ankündigungs-Banner laden
+  -------------------------------------------------- */
+  async function loadBanner() {
+    try {
+      const res = await fetch('/data/banner.json');
+      if (!res.ok) return;
+      const d = await res.json();
+      if (!d.aktiv) return;
+      if (sessionStorage.getItem('pitzlloch_banner_dismissed')) return;
+
+      const icons = { urlaub: '🏖️', event: '🎉', info: 'ℹ️', warnung: '⚠️' };
+      const bar = document.createElement('div');
+      bar.id = 'site-banner';
+      bar.className = 'typ-' + (d.typ || 'info');
+      bar.innerHTML = `
+        <div class="banner-inner">
+          <span class="banner-icon">${icons[d.typ] || 'ℹ️'}</span>
+          <span class="banner-text">${d.text}</span>
+          ${d.link_text && d.link_url ? `<a href="${d.link_url}" class="banner-link">${d.link_text} →</a>` : ''}
+          <button class="banner-close" aria-label="Meldung schließen">✕</button>
+        </div>`;
+
+      document.body.prepend(bar);
+      requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('visible')));
+
+      bar.querySelector('.banner-close').addEventListener('click', () => {
+        bar.classList.remove('visible');
+        setTimeout(() => bar.remove(), 400);
+        sessionStorage.setItem('pitzlloch_banner_dismissed', '1');
+      });
+    } catch(e) {}
+  }
+
+  /* --------------------------------------------------
+     13. Verfügbarkeits-Kalender laden
+  -------------------------------------------------- */
+  async function loadKalender() {
+    const grid = document.getElementById('kalender-grid');
+    if (!grid) return;
+
+    try {
+      const res = await fetch('/data/kalender.json');
+      if (!res.ok) return;
+      const d = await res.json();
+
+      const section = grid.closest('section');
+      if (!d.aktiv) { if (section) section.style.display = 'none'; return; }
+
+      const tEl = document.getElementById('kalender-titel');
+      if (tEl && d.titel) tEl.textContent = d.titel;
+      const hEl = document.getElementById('kalender-hinweis');
+      if (hEl && d.hinweis) hEl.textContent = d.hinweis;
+
+      // Gebuchte Daten als Map aufbauen
+      const booked = {};
+      (d.buchungen || []).forEach(b => {
+        let cur = new Date(b.von + 'T00:00:00');
+        const end = new Date(b.bis + 'T00:00:00');
+        while (cur <= end) {
+          booked[cur.toISOString().split('T')[0]] = b.typ || 'belegt';
+          cur.setDate(cur.getDate() + 1);
+        }
+      });
+
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const mNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+      const dLabels = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+      const html = [];
+      for (let offset = 0; offset < 6; offset++) {
+        const first = new Date(today.getFullYear(), today.getMonth() + offset, 1);
+        const year  = first.getFullYear();
+        const month = first.getMonth();
+        const last  = new Date(year, month + 1, 0).getDate();
+        let dow = first.getDay() - 1; if (dow < 0) dow = 6;
+
+        let cells = dLabels.map(l => `<div class="kal-day-label">${l}</div>`).join('');
+        for (let i = 0; i < dow; i++) cells += '<div class="kal-cell empty"></div>';
+        for (let day = 1; day <= last; day++) {
+          const ds  = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+          const typ = booked[ds];
+          const past = new Date(year, month, day) < today;
+          cells += `<div class="kal-cell ${past ? 'past' : (typ || 'frei')}">${day}</div>`;
+        }
+        html.push(`<div class="kal-month fade"><div class="kal-month-header">${mNames[month]} ${year}</div><div class="kal-grid">${cells}</div></div>`);
+      }
+      grid.innerHTML = html.join('');
+      initFadeIn();
+    } catch(e) { console.warn('Kalender laden fehlgeschlagen:', e); }
+  }
+
+  /* --------------------------------------------------
+     11. Init
+  -------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
+    loadBanner();
     loadContent();
     loadPageContent();
+    loadKalender();
     initFadeIn();
     initAccordion();
     initGallery();

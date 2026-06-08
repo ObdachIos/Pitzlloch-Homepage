@@ -289,3 +289,54 @@ collections:
               - { label: "Datum", name: date, widget: string, hint: "z.B. September 2024" }
               - { label: "Bewertungstext", name: text, widget: text }
               - { label: "Sterne (1–5)", name: stars, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+
+  # ── INFO-BANNER ───────────────────────────────────────────
+  - name: banner
+    label: "📢 Info-Banner"
+    files:
+      - name: banner
+        label: "Banner bearbeiten"
+        file: "data/banner.json"
+        format: json
+        fields:
+          - { label: "Banner anzeigen?", name: aktiv, widget: boolean, default: false, hint: "Ein = Banner erscheint auf allen Seiten. Aus = Banner versteckt." }
+          - label: "Typ / Farbe"
+            name: typ
+            widget: select
+            options:
+              - { label: "ℹ️ Info (Gold)", value: "info" }
+              - { label: "🏖️ Urlaub / Betriebsferien (Braun)", value: "urlaub" }
+              - { label: "🎉 Besonderes Event (Dunkelgrün)", value: "event" }
+              - { label: "⚠️ Wichtige Meldung (Rot)", value: "warnung" }
+          - { label: "Banner-Text", name: text, widget: string, hint: "Kurzer Text – z.B. 'Betriebsurlaub 24.12.–06.01. – Ab 7. Januar erreichbar'" }
+          - { label: "Link-Text (optional)", name: link_text, widget: string, required: false, hint: "z.B. 'Termin anfragen' – leer lassen wenn kein Link" }
+          - { label: "Link-Ziel (optional)", name: link_url, widget: string, required: false, hint: "z.B. /kontakt.html" }
+
+  # ── VERFÜGBARKEITS-KALENDER ───────────────────────────────
+  - name: kalender
+    label: "📅 Verfügbarkeits-Kalender"
+    files:
+      - name: kalender
+        label: "Buchungen & Verfügbarkeit"
+        file: "data/kalender.json"
+        format: json
+        fields:
+          - { label: "Kalender auf Kontaktseite anzeigen?", name: aktiv, widget: boolean, default: true }
+          - { label: "Überschrift", name: titel, widget: string }
+          - { label: "Hinweistext unter dem Kalender", name: hinweis, widget: text }
+          - label: "Buchungen / gebuchte Termine"
+            name: buchungen
+            widget: list
+            label_singular: "Buchung"
+            summary: "{{von}} – {{bis}} ({{label}})"
+            fields:
+              - { label: "Von (Datum)", name: von, widget: date, format: "YYYY-MM-DD", hint: "Startdatum der Buchung" }
+              - { label: "Bis (Datum)", name: bis, widget: date, format: "YYYY-MM-DD", hint: "Enddatum der Buchung (= Von wenn nur 1 Tag)" }
+              - { label: "Bezeichnung (intern, wird nicht angezeigt)", name: label, widget: string, required: false, hint: "z.B. 'Hochzeit Familie Müller' – nur für Sie sichtbar" }
+              - label: "Darstellung"
+                name: typ
+                widget: select
+                options:
+                  - { label: "Belegt / Gebucht (Rot)", value: "belegt" }
+                  - { label: "Besonderes Event (Gold)", value: "event" }
+                  - { label: "Option / Anfrage läuft (gestrichelt)", value: "option" }

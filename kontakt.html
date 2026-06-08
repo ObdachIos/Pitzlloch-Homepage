@@ -37,7 +37,7 @@
     </section>
 
     <!-- KONTAKT + FORMULAR -->
-    <section class="section bg-cream">
+    <section class="section bg-cream" id="kontakt-formular">
       <div class="container">
         <div class="grid-2" style="gap:var(--sp-lg); align-items:start;">
 
@@ -166,6 +166,35 @@
             </form>
 
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERFÜGBARKEITS-KALENDER -->
+    <section class="section bg-cream-dark" id="verfuegbarkeit">
+      <div class="container">
+        <div class="section-intro fade">
+          <span class="section-label">Terminplanung</span>
+          <h2 id="kalender-titel">Verfügbarkeit auf einen Blick</h2>
+          <p>Prüfen Sie, ob Ihr Wunschdatum noch frei ist – dann einfach anfragen.</p>
+        </div>
+
+        <div class="kal-wrapper" id="kalender-grid">
+          <!-- wird per JS aus data/kalender.json geladen -->
+        </div>
+
+        <div class="kal-legend fade">
+          <div class="kal-legend-item"><div class="kal-legend-dot frei"></div> Verfügbar</div>
+          <div class="kal-legend-item"><div class="kal-legend-dot belegt"></div> Belegt</div>
+          <div class="kal-legend-item"><div class="kal-legend-dot event"></div> Besonderes Event</div>
+        </div>
+
+        <p class="fade" id="kalender-hinweis" style="text-align:center;margin-top:1.25rem;font-size:.84rem;color:var(--text-light);font-style:italic;">
+          Grün = noch verfügbar · Rot = bereits belegt
+        </p>
+
+        <div class="text-center fade" style="margin-top:var(--sp-md);">
+          <a href="#kontakt-formular" class="btn btn-dark">Termin anfragen</a>
         </div>
       </div>
     </section>

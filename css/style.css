@@ -698,6 +698,141 @@ textarea { resize: vertical; min-height: 115px; }
 .fade-d3 { transition-delay: .3s; }
 .fade-d4 { transition-delay: .4s; }
 
+/* ================================================================
+   ANKÜNDIGUNGS-BANNER
+   ================================================================ */
+#site-banner {
+  width: 100%;
+  position: relative;
+  z-index: 200;
+  font-size: .85rem;
+  font-family: var(--font-body);
+  transform: translateY(-100%);
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+  color: #fff;
+}
+#site-banner.visible   { transform: translateY(0); }
+#site-banner.typ-info    { background: var(--gold); color: #fff; }
+#site-banner.typ-urlaub  { background: #7A5220; color: #fff; }
+#site-banner.typ-event   { background: var(--green-dark); color: var(--gold-light); }
+#site-banner.typ-warnung { background: #8B3A2A; color: #fff; }
+.banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: .6rem 3.5rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.banner-icon { font-size: 1rem; flex-shrink: 0; }
+.banner-text { font-weight: 500; letter-spacing: .01em; line-height: 1.4; }
+.banner-link {
+  text-decoration: underline;
+  opacity: .85;
+  white-space: nowrap;
+  font-weight: 600;
+  transition: opacity var(--trans-fast);
+}
+.banner-link:hover { opacity: 1; }
+.banner-close {
+  position: absolute;
+  right: .9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: inherit;
+  opacity: .65;
+  font-size: .95rem;
+  padding: .35rem .55rem;
+  border-radius: 4px;
+  transition: opacity var(--trans-fast), background var(--trans-fast);
+}
+.banner-close:hover { opacity: 1; background: rgba(255,255,255,.15); }
+@media (max-width: 600px) {
+  .banner-inner { padding: .55rem 2.5rem .55rem 1rem; text-align: left; }
+}
+
+/* ================================================================
+   VERFÜGBARKEITS-KALENDER
+   ================================================================ */
+.kal-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.25rem;
+  margin-top: var(--sp-md);
+}
+.kal-month {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.kal-month-header {
+  background: var(--green-dark);
+  color: var(--cream);
+  text-align: center;
+  padding: .7rem 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  letter-spacing: .06em;
+}
+.kal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  padding: .65rem;
+  background: var(--cream-dark);
+}
+.kal-day-label {
+  text-align: center;
+  font-size: .63rem;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: .07em;
+  padding: .3rem 0;
+  background: var(--cream);
+}
+.kal-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .74rem;
+  border-radius: 3px;
+  cursor: default;
+  background: var(--cream);
+  color: var(--text);
+  transition: transform .12s;
+}
+.kal-cell.empty    { background: transparent; }
+.kal-cell.past     { color: #ccc; background: #f8f6f2; }
+.kal-cell.frei     { background: rgba(45,74,62,.08); color: var(--green); }
+.kal-cell.belegt   { background: rgba(160,50,50,.13); color: #923030; font-weight: 600; }
+.kal-cell.event    { background: rgba(196,163,90,.22); color: #7A5E20; font-weight: 600; }
+.kal-cell.option   { background: rgba(196,163,90,.08); color: var(--gold); border: 1px dashed var(--gold-light); }
+
+.kal-legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.5rem;
+  font-size: .8rem;
+  color: var(--text-light);
+}
+.kal-legend-item { display: flex; align-items: center; gap: .4rem; }
+.kal-legend-dot  { width: 13px; height: 13px; border-radius: 3px; }
+.kal-legend-dot.frei   { background: rgba(45,74,62,.15); }
+.kal-legend-dot.belegt { background: rgba(160,50,50,.25); }
+.kal-legend-dot.event  { background: rgba(196,163,90,.4); }
+
+@media (max-width: 600px) {
+  .kal-wrapper { grid-template-columns: 1fr; }
+  .kal-cell { font-size: .68rem; }
+}
+
 /* ---- Utilities ---- */
 .text-center { text-align: center; }
 .text-gold   { color: var(--gold); }

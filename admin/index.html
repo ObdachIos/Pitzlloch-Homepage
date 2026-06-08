@@ -267,6 +267,79 @@
     CMS.registerPreviewTemplate('team', TeamPreview);
 
     /* Hilfsfunktion: Bildkarte */
+    /* ── INFO-BANNER VORSCHAU ───────────────────────────────── */
+    function BannerPreview({ entry }) {
+      const d = getData(entry);
+      if (!d.aktiv) return h('div', { style: { padding: '1.5rem', background: '#f5f0e8', fontFamily: 'Inter, sans-serif', borderRadius: '8px', color: '#888', textAlign: 'center' } },
+        h('p', {}, '🔕 Banner ist deaktiviert – aktiviere ihn oben um ihn zu sehen.')
+      );
+      const bgs = { info: C.gold, urlaub: '#7A5220', event: C.green, warnung: '#8B3A2A' };
+      const icons = { info: 'ℹ️', urlaub: '🏖️', event: '🎉', warnung: '⚠️' };
+      const bg = bgs[d.typ] || C.gold;
+      const fgColor = d.typ === 'event' ? '#D4B870' : '#fff';
+      return h('div', {},
+        h('div', { style: { background: bg, color: fgColor, padding: '.65rem 3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.65rem', fontFamily: 'Inter, sans-serif', fontSize: '.88rem', position: 'relative' } },
+          h('span', {}, icons[d.typ] || 'ℹ️'),
+          h('span', { style: { fontWeight: 500 } }, d.text || '(Kein Text eingegeben)'),
+          d.link_text && h('span', { style: { textDecoration: 'underline', opacity: .85 } }, d.link_text + ' →'),
+          h('span', { style: { position: 'absolute', right: '.9rem', opacity: .65, fontSize: '.9rem' } }, '✕')
+        ),
+        h('div', { style: { padding: '1rem', background: '#f5f0e8', fontFamily: 'Inter, sans-serif', fontSize: '.78rem', color: '#888', textAlign: 'center' } },
+          '↑ So sieht der Banner oben auf der Seite aus'
+        )
+      );
+    }
+    CMS.registerPreviewTemplate('banner', BannerPreview);
+
+    /* ── KALENDER VORSCHAU ──────────────────────────────────── */
+    function KalenderPreview({ entry }) {
+      const d = getData(entry);
+      if (!d.aktiv) return h('div', { style: { padding: '1.5rem', background: '#f5f0e8', fontFamily: 'Inter, sans-serif', borderRadius: '8px', color: '#888', textAlign: 'center' } },
+        h('p', {}, '📅 Kalender ist deaktiviert.')
+      );
+      const buchungen = d.buchungen || [];
+      const mNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+      const dL = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+      const booked = {};
+      buchungen.forEach(b => {
+        if (!b.von || !b.bis) return;
+        let cur = new Date(b.von + 'T00:00:00');
+        const end = new Date(b.bis + 'T00:00:00');
+        while (cur <= end) { booked[cur.toISOString().split('T')[0]] = b.typ || 'belegt'; cur.setDate(cur.getDate() + 1); }
+      });
+      const today = new Date(); today.setHours(0,0,0,0);
+      const months = [];
+      for (let i = 0; i < 3; i++) months.push(new Date(today.getFullYear(), today.getMonth() + i, 1));
+      const typColors = { belegt: 'rgba(160,50,50,.2)', event: 'rgba(196,163,90,.35)', option: 'rgba(196,163,90,.1)', frei: 'rgba(45,74,62,.08)', past: '#f0ece6' };
+      const typTextColors = { belegt: '#923030', event: '#7A5E20', option: C.gold, frei: C.green, past: '#ccc' };
+      return h('div', { style: { padding: '1.5rem', background: '#e8e4dc', fontFamily: 'Inter, sans-serif' } },
+        h('h2', { style: { ...C.heading, fontSize: '1.5rem', textAlign: 'center', marginBottom: '1rem' } }, d.titel || 'Verfügbarkeit'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' } },
+          ...months.map((m, mi) => {
+            const year = m.getFullYear(); const month = m.getMonth();
+            const last = new Date(year, month + 1, 0).getDate();
+            let dow = m.getDay() - 1; if (dow < 0) dow = 6;
+            const cells = [];
+            dL.forEach(l => cells.push(h('div', { key:'d'+l, style: { textAlign:'center', fontSize:'.58rem', fontWeight:600, color:'#888', padding:'.2rem 0' } }, l)));
+            for (let i = 0; i < dow; i++) cells.push(h('div', { key:'e'+i }));
+            for (let day = 1; day <= last; day++) {
+              const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+              const typ = booked[ds]; const isPast = new Date(year, month, day) < today;
+              const k = isPast ? 'past' : (typ || 'frei');
+              cells.push(h('div', { key: ds, style: { aspectRatio:'1', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'.62rem', borderRadius:'3px', background: typColors[k], color: typTextColors[k], fontWeight: (typ && !isPast) ? 600 : 400 } }, String(day)));
+            }
+            return h('div', { key: mi, style: { background: '#fff', borderRadius: '10px', overflow: 'hidden' } },
+              h('div', { style: { background: C.green, color: C.cream, textAlign:'center', padding:'.5rem', fontSize:'.85rem', letterSpacing:'.05em', fontFamily:'"Cormorant Garamond",serif' } }, mNames[month] + ' ' + year),
+              h('div', { style: { display:'grid', gridTemplateColumns:'repeat(7,1fr)', gap:'1px', padding:'.4rem', background: '#e8e4dc' } }, ...cells)
+            );
+          })
+        ),
+        h('p', { style: { textAlign:'center', fontSize:'.75rem', color:'#999', marginTop:'.75rem', fontStyle:'italic' } }, d.hinweis || ''),
+        h('div', { style: { textAlign:'center', marginTop:'.75rem', fontSize:'.78rem', color:'#888' } }, `📋 ${buchungen.length} Buchung${buchungen.length !== 1 ? 'en' : ''} eingetragen`)
+      );
+    }
+    CMS.registerPreviewTemplate('kalender', KalenderPreview);
+
     function BildCard(src, label) {
       return h('div', { style: { borderRadius: '10px', overflow: 'hidden', background: '#fff' } },
         src
