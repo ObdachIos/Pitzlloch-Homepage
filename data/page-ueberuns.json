@@ -1,5 +1,27 @@
 {
   "hero_bild": "",
+  "geschichte_lead": "In der stillen Hügellandschaft des Chiemgaus, zwischen Grabenstätt und dem glitzernden Chiemsee, liegt ein Fleck Erde, der schon immer Besonderes in sich trug.",
+  "geschichte_text1": "Das Pitzlloch hat eine Geschichte, die so verwurzelt ist wie die alten Bäume auf dem Gelände. Was einst ein traditionsreicher Bauernhof war, verwandelte sich über die Jahre in das, was es heute ist: eine der eindrucksvollsten Hochzeits- und Eventlocations in ganz Oberbayern.",
+  "geschichte_text2": "Mit viel Liebe zum Detail, einem tiefen Respekt für die Natur und dem Wunsch, einen Ort zu schaffen, an dem Menschen die schönsten Momente ihres Lebens feiern können, entstand das Pitzlloch, wie es heute steht.",
+  "werte": [
+    {
+      "icon": "🤝",
+      "heading": "Persönlichkeit",
+      "text": "Jede Veranstaltung bei uns ist einzigartig. Wir hören zu, verstehen und gestalten – immer mit persönlicher Note und echtem Engagement."
+    },
+    {
+      "icon": "🌿",
+      "heading": "Nachhaltigkeit",
+      "text": "Wir schätzen die Natur des Chiemgaus und handeln verantwortungsbewusst – von der Energieversorgung bis zur Küche."
+    },
+    {
+      "icon": "⭐",
+      "heading": "Qualität",
+      "text": "4,9 Sterne bei 69 Rezensionen sind nicht Zufall – sie sind das Ergebnis unseres täglichen Strebens nach Perfektion in jedem Detail."
+    }
+  ],
+  "lage_lead": "Pitzlloch liegt im Herzen des Chiemgaus, nur wenige Minuten vom Chiemsee entfernt und mit direktem Blick auf die Voralpen.",
+  "lage_text": "Die Umgebung bietet Ihren Gästen viel: Übernachtungsmöglichkeiten in nahegelegenen Hotels und Gasthäusern, Ausflüge zu Herrenchiemsee, Wasserwandern auf dem Chiemsee und die atemberaubende Natur des Chiemgauer Alpenvorlands.",
   "geschichte_bild": "",
   "lage_bild": ""
 }

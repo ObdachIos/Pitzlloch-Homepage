@@ -496,6 +496,37 @@
         setImg('bild-lage', d.lage_bild, 'Lage Pitzlloch');
       }
 
+      /* Texte generisch befüllen: id="text-FIELDNAME" */
+      Object.keys(d).forEach(key => {
+        const el = document.getElementById('text-' + key);
+        if (el && typeof d[key] === 'string') el.textContent = d[key];
+      });
+
+      /* Feature-Listen generisch befüllen: id="list-FIELDNAME" */
+      Object.keys(d).forEach(key => {
+        const ul = document.getElementById('list-' + key);
+        if (ul && Array.isArray(d[key])) {
+          ul.innerHTML = d[key].map(item =>
+            `<li class="feature-item"><span class="feature-dot">✓</span><span>${item}</span></li>`
+          ).join('');
+        }
+      });
+
+      /* Werte-Grid (Über uns) */
+      if (page === 'ueber-uns' && d.werte?.length) {
+        const grid = document.getElementById('werte-grid');
+        if (grid) {
+          const delays = ['fade-d1', 'fade-d2', 'fade-d3'];
+          grid.innerHTML = d.werte.map((w, i) => `
+            <div class="fade ${delays[i % 3]}" style="padding:var(--sp-md);background:var(--cream);border-radius:var(--r-lg);">
+              <div style="font-size:2.5rem;margin-bottom:.75rem;">${w.icon}</div>
+              <h3 style="font-size:1.5rem;margin-bottom:.5rem;">${w.heading}</h3>
+              <p style="font-size:.9rem;">${w.text}</p>
+            </div>`).join('');
+          initFadeIn();
+        }
+      }
+
       /* Galerie */
       if (page === 'galerie' && d.bilder?.length) {
         const grid = document.getElementById('galerie-grid');

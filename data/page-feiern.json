@@ -1,5 +1,16 @@
 {
   "hero_bild": "",
   "hero_untertitel": "Jeder Anlass verdient einen besonderen Ort. Das Pitzlloch macht aus Ihrer Feier ein Erlebnis.",
+  "intro_heading": "Für jeden Anlass der richtige Rahmen",
+  "intro_text": "Ob runder Geburtstag, goldene Hochzeit, Taufe, Firmenfeier oder Weihnachtsfeier – das Pitzlloch in Grabenstätt bietet für jeden Anlass die passende Atmosphäre. Flexibel, persönlich, unvergesslich.",
+  "service_lead": "Vom ersten Gespräch bis zum letzten Gast kümmern wir uns um alles – damit Sie Ihren Abend in vollen Zügen genießen können.",
+  "service_features": [
+    "Individuelle Beratung und Planung Ihrer Veranstaltung",
+    "Flexible Raumgestaltung: Bankett, Buffet, Cocktail-Setup",
+    "Eigenes Catering oder externe Kooperationspartner",
+    "Professionelle Ton- und Lichttechnik inklusive",
+    "Übernachtungsmöglichkeiten in der Region",
+    "Ansprechpartner vor Ort am gesamten Veranstaltungstag"
+  ],
   "service_bild": ""
 }

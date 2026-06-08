@@ -1,6 +1,18 @@
 {
   "hero_bild": "",
   "hero_untertitel": "Regional verwurzelt, international inspiriert – Gaumenfreuden für Ihren besonderen Tag.",
+  "philosophie_heading": "Essen verbindet Menschen",
+  "philosophie_lead": "Wir glauben, dass ein gutes Festmahl mehr ist als die Summe seiner Zutaten. Es ist der Duft, der die Gäste empfängt. Die Freude am Tisch. Das Gespräch, das beim Dessert beginnt.",
+  "philosophie_text": "Unser Catering-Konzept setzt auf frische, saisonale Produkte aus der Region, kreativ interpretiert von erfahrenen Köchen. Ob mehrgängiges Hochzeitsmenü, rustikales Buffet oder elegantes Fingerfood – wir stimmen das kulinarische Erlebnis ganz auf Ihre Vorstellungen und die Besonderheiten Ihres Anlasses ab.",
+  "wuensche_heading": "Alles nach Ihrem Geschmack",
+  "wuensche_lead": "Vegetarisch, vegan, glutenfrei oder koscher – wir berücksichtigen alle Ernährungsgewohnheiten Ihrer Gäste selbstverständlich und ohne Abstriche.",
+  "wuensche_features": [
+    "Individuelle Menüplanung gemeinsam mit Ihnen",
+    "Probeessen auf Anfrage möglich",
+    "Sonderwünsche und Allergien selbstverständlich berücksichtigt",
+    "Kooperation mit lokalen Konditoreien für Hochzeitstorten",
+    "Getränkepakete oder offene Getränkekarte buchbar"
+  ],
   "philosophie_bild": "",
   "wuensche_bild": ""
 }

@@ -1,6 +1,24 @@
 {
   "hero_bild": "",
   "hero_untertitel": "Heiraten Sie dort, wo die Natur selbst die schönste Kulisse schafft – mitten im Herzen des Chiemgaus.",
+  "intro_heading": "Jede Hochzeit ist einzigartig",
+  "intro_text": "Wir glauben daran, dass der schönste Tag Ihres Lebens genauso individuell sein sollte wie Ihre Liebe. Das Pitzlloch bietet Ihnen den Rahmen – Sie füllen ihn mit Ihrer Geschichte.",
+  "festsaal_lead": "Hohe Decken, warmes Licht und eine Atmosphäre, die zwischen Herzlichkeit und Eleganz balanciert – unser Festsaal ist das Herzstück des Pitzlloch.",
+  "festsaal_features": [
+    "Kapazität bis zu 180 Personen (Bestuhlung nach Wunsch)",
+    "Flexible Raumaufteilung für intime oder großzügige Feiern",
+    "Professionelle Ton- und Lichttechnik",
+    "Behindertengerechter Zugang",
+    "Garderobe und separate Sanitäranlagen"
+  ],
+  "aussen_heading": "Heiraten unter freiem Himmel",
+  "aussen_lead": "Der weitläufige Garten und die romantische Terrasse verwandeln sich in Ihrer Hochzeitssaison in eine natürliche Bühne – gerahmt von Blüten, Vogelgesang und dem weiten Blick ins Chiemgauer Panorama.",
+  "aussen_features": [
+    "Outdoor-Trauung in idyllischer Gartenkulisse",
+    "Überdachte Terrasse als Wetterschutz",
+    "Weitläufiger Parkplatz für alle Gäste",
+    "Magische Abendbeleuchtung im Außenbereich"
+  ],
   "festsaal_bild": "",
   "aussen_bild": ""
 }

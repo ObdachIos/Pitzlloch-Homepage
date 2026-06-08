@@ -59,8 +59,21 @@ collections:
         fields:
           - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
           - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "Intro-Überschrift", name: intro_heading, widget: string }
+          - { label: "Intro-Text", name: intro_text, widget: text }
           - { label: "🖼️ Bild Festsaal", name: festsaal_bild, widget: image, required: false }
+          - { label: "Festsaal Beschreibungstext", name: festsaal_lead, widget: text }
+          - label: "Festsaal Leistungen (Bullet-Punkte)"
+            name: festsaal_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
           - { label: "🖼️ Bild Außenbereich", name: aussen_bild, widget: image, required: false }
+          - { label: "Außenbereich Überschrift", name: aussen_heading, widget: string }
+          - { label: "Außenbereich Beschreibungstext", name: aussen_lead, widget: text }
+          - label: "Außenbereich Leistungen (Bullet-Punkte)"
+            name: aussen_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
 
   # ── FEIERN & EVENTS ────────────────────────────────────────
   - name: feiern
@@ -73,7 +86,14 @@ collections:
         fields:
           - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
           - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
+          - { label: "Intro-Überschrift", name: intro_heading, widget: string }
+          - { label: "Intro-Text", name: intro_text, widget: text }
           - { label: "🖼️ Bild Service/Leistungen", name: service_bild, widget: image, required: false }
+          - { label: "Leistungen Beschreibungstext", name: service_lead, widget: text }
+          - label: "Leistungen Bullet-Punkte"
+            name: service_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
 
   # ── KULINARIK ──────────────────────────────────────────────
   - name: kulinarik
@@ -87,7 +107,16 @@ collections:
           - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
           - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
           - { label: "🖼️ Bild Philosophie/Küche", name: philosophie_bild, widget: image, required: false }
+          - { label: "Philosophie Überschrift", name: philosophie_heading, widget: string }
+          - { label: "Philosophie Einleitungstext", name: philosophie_lead, widget: text }
+          - { label: "Philosophie Beschreibungstext", name: philosophie_text, widget: text }
           - { label: "🖼️ Bild Sonderwünsche/Torte", name: wuensche_bild, widget: image, required: false }
+          - { label: "Sonderwünsche Überschrift", name: wuensche_heading, widget: string }
+          - { label: "Sonderwünsche Einleitungstext", name: wuensche_lead, widget: text }
+          - label: "Sonderwünsche Bullet-Punkte"
+            name: wuensche_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
 
   # ── RÄUMLICHKEITEN ─────────────────────────────────────────
   - name: raeumlichkeiten
@@ -101,20 +130,45 @@ collections:
           - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
           - { label: "Hero-Untertitel", name: hero_untertitel, widget: text }
           - { label: "🖼️ Bild Festsaal", name: festsaal_bild, widget: image, required: false }
+          - { label: "Festsaal Beschreibungstext", name: festsaal_lead, widget: text }
+          - label: "Festsaal Leistungen (Bullet-Punkte)"
+            name: festsaal_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
           - { label: "🖼️ Bild Terrasse/Garten", name: terrasse_bild, widget: image, required: false }
+          - { label: "Außenbereich Überschrift", name: aussen_heading, widget: string }
+          - { label: "Außenbereich Beschreibungstext", name: aussen_lead, widget: text }
+          - label: "Außenbereich Leistungen (Bullet-Punkte)"
+            name: aussen_features
+            widget: list
+            field: { label: "Punkt", name: feature, widget: string }
 
   # ── ÜBER UNS ───────────────────────────────────────────────
   - name: ueberuns
     label: "👤 Über uns"
     files:
       - name: bilder
-        label: "Bilder"
+        label: "Bilder & Texte"
         file: "data/page-ueberuns.json"
         format: json
         fields:
           - { label: "🖼️ Hero-Bild (Seitenbanner)", name: hero_bild, widget: image, required: false }
           - { label: "🖼️ Bild Geschichte/Location", name: geschichte_bild, widget: image, required: false }
+          - { label: "Geschichte Einleitungstext", name: geschichte_lead, widget: text }
+          - { label: "Geschichte Absatz 1", name: geschichte_text1, widget: text }
+          - { label: "Geschichte Absatz 2", name: geschichte_text2, widget: text }
+          - label: "Unsere Werte (3 Karten)"
+            name: werte
+            widget: list
+            label_singular: "Wert"
+            summary: "{{icon}} {{heading}}"
+            fields:
+              - { label: "Icon (Emoji)", name: icon, widget: string }
+              - { label: "Überschrift", name: heading, widget: string }
+              - { label: "Text", name: text, widget: text }
           - { label: "🖼️ Bild Lage/Panorama", name: lage_bild, widget: image, required: false }
+          - { label: "Lage Einleitungstext", name: lage_lead, widget: text }
+          - { label: "Lage Beschreibungstext", name: lage_text, widget: text }
 
   # ── TEAM ───────────────────────────────────────────────────
   - name: team
