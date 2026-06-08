@@ -572,7 +572,8 @@
           <button class="banner-close" aria-label="Meldung schließen">✕</button>
         </div>`;
 
-      document.body.prepend(bar);
+      const anchor = document.getElementById('header-ph') || document.body.firstElementChild;
+      anchor.insertAdjacentElement('afterend', bar);
       requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('visible')));
 
       bar.querySelector('.banner-close').addEventListener('click', () => {

@@ -707,11 +707,13 @@ textarea { resize: vertical; min-height: 115px; }
   z-index: 200;
   font-size: .85rem;
   font-family: var(--font-body);
-  transform: translateY(-100%);
-  transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .45s ease, opacity .35s ease;
   color: #fff;
 }
-#site-banner.visible   { transform: translateY(0); }
+#site-banner.visible { max-height: 120px; opacity: 1; }
 #site-banner.typ-info    { background: var(--gold); color: #fff; }
 #site-banner.typ-urlaub  { background: #7A5220; color: #fff; }
 #site-banner.typ-event   { background: var(--green-dark); color: var(--gold-light); }
