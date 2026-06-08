@@ -574,10 +574,19 @@
 
       const anchor = document.getElementById('header-ph') || document.body.firstElementChild;
       anchor.insertAdjacentElement('afterend', bar);
-      requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('visible')));
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bar.classList.add('visible');
+        setTimeout(() => {
+          const h = bar.offsetHeight;
+          if (h > 0) document.documentElement.style.setProperty('--banner-h', h + 'px');
+          document.body.classList.add('has-banner');
+        }, 460);
+      }));
 
       bar.querySelector('.banner-close').addEventListener('click', () => {
         bar.classList.remove('visible');
+        document.body.classList.remove('has-banner');
+        document.documentElement.style.removeProperty('--banner-h');
         setTimeout(() => bar.remove(), 400);
         sessionStorage.setItem('pitzlloch_banner_dismissed', '1');
       });
@@ -588,15 +597,15 @@
      13. Verfügbarkeits-Kalender laden
   -------------------------------------------------- */
   async function loadKalender() {
-    const grid = document.getElementById('kalender-grid');
-    if (!grid) return;
+    const wrapper = document.getElementById('kalender-grid');
+    if (!wrapper) return;
 
     try {
       const res = await fetch('/data/kalender.json');
       if (!res.ok) return;
       const d = await res.json();
 
-      const section = grid.closest('section');
+      const section = wrapper.closest('section');
       if (!d.aktiv) { if (section) section.style.display = 'none'; return; }
 
       const tEl = document.getElementById('kalender-titel');
@@ -604,9 +613,9 @@
       const hEl = document.getElementById('kalender-hinweis');
       if (hEl && d.hinweis) hEl.textContent = d.hinweis;
 
-      // Gebuchte Daten als Map aufbauen
       const booked = {};
       (d.buchungen || []).forEach(b => {
+        if (!b.von || !b.bis) return;
         let cur = new Date(b.von + 'T00:00:00');
         const end = new Date(b.bis + 'T00:00:00');
         while (cur <= end) {
@@ -618,27 +627,53 @@
       const today = new Date(); today.setHours(0, 0, 0, 0);
       const mNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
       const dLabels = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+      let viewOffset = 0;
 
-      const html = [];
-      for (let offset = 0; offset < 6; offset++) {
-        const first = new Date(today.getFullYear(), today.getMonth() + offset, 1);
-        const year  = first.getFullYear();
-        const month = first.getMonth();
-        const last  = new Date(year, month + 1, 0).getDate();
-        let dow = first.getDay() - 1; if (dow < 0) dow = 6;
+      function renderKalender() {
+        const months = [];
+        for (let i = 0; i < 3; i++) {
+          const first = new Date(today.getFullYear(), today.getMonth() + viewOffset + i, 1);
+          const year  = first.getFullYear();
+          const month = first.getMonth();
+          const last  = new Date(year, month + 1, 0).getDate();
+          let dow = first.getDay() - 1; if (dow < 0) dow = 6;
 
-        let cells = dLabels.map(l => `<div class="kal-day-label">${l}</div>`).join('');
-        for (let i = 0; i < dow; i++) cells += '<div class="kal-cell empty"></div>';
-        for (let day = 1; day <= last; day++) {
-          const ds  = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-          const typ = booked[ds];
-          const past = new Date(year, month, day) < today;
-          cells += `<div class="kal-cell ${past ? 'past' : (typ || 'frei')}">${day}</div>`;
+          let cells = dLabels.map(l => `<div class="kal-day-label">${l}</div>`).join('');
+          for (let j = 0; j < dow; j++) cells += '<div class="kal-cell empty"></div>';
+          for (let day = 1; day <= last; day++) {
+            const ds  = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+            const typ = booked[ds];
+            const past = new Date(year, month, day) < today;
+            cells += `<div class="kal-cell ${past ? 'past' : (typ || 'frei')}">${day}</div>`;
+          }
+          months.push({ year, month, cells });
         }
-        html.push(`<div class="kal-month fade"><div class="kal-month-header">${mNames[month]} ${year}</div><div class="kal-grid">${cells}</div></div>`);
+
+        const f = months[0], l = months[2];
+        const rangeLabel = f.year === l.year
+          ? `${mNames[f.month]} – ${mNames[l.month]} ${f.year}`
+          : `${mNames[f.month]} ${f.year} – ${mNames[l.month]} ${l.year}`;
+
+        wrapper.innerHTML = `
+          <div class="kal-nav">
+            <button class="kal-nav-btn" id="kal-prev" ${viewOffset === 0 ? 'disabled' : ''}>&#8592; Zurück</button>
+            <span class="kal-nav-label">${rangeLabel}</span>
+            <button class="kal-nav-btn" id="kal-next">Weiter &#8594;</button>
+          </div>
+          <div class="kal-months">
+            ${months.map(m => `
+              <div class="kal-month fade">
+                <div class="kal-month-header">${mNames[m.month]} ${m.year}</div>
+                <div class="kal-grid">${m.cells}</div>
+              </div>`).join('')}
+          </div>`;
+
+        initFadeIn();
+        document.getElementById('kal-prev')?.addEventListener('click', () => { viewOffset = Math.max(0, viewOffset - 3); renderKalender(); });
+        document.getElementById('kal-next')?.addEventListener('click', () => { viewOffset += 3; renderKalender(); });
       }
-      grid.innerHTML = html.join('');
-      initFadeIn();
+
+      renderKalender();
     } catch(e) { console.warn('Kalender laden fehlgeschlagen:', e); }
   }
 

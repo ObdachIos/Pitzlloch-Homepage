@@ -4,21 +4,45 @@
   "hinweis": "Grün = noch verfügbar · Rot = bereits belegt · Die genaue Verfügbarkeit Ihres Wunschtermins erfragen Sie am besten direkt bei uns.",
   "buchungen": [
     {
-      "von": "2025-06-23",
-      "bis": "2025-06-25",
-      "label": "Neue Webseite",
+      "von": "2026-07-04",
+      "bis": "2026-07-05",
+      "label": "Hochzeit Familie Müller",
       "typ": "belegt"
     },
     {
-      "von": "2025-07-27",
-      "bis": "2025-07-28",
+      "von": "2026-07-18",
+      "bis": "2026-07-19",
+      "label": "Geburtstag",
+      "typ": "belegt"
+    },
+    {
+      "von": "2026-08-08",
+      "bis": "2026-08-08",
       "label": "Firmenfeier",
       "typ": "option"
     },
     {
-      "von": "2025-07-12",
-      "bis": "2025-07-13",
-      "label": "Hochzeit",
+      "von": "2026-09-12",
+      "bis": "2026-09-13",
+      "label": "Hochzeit Familie Berger",
+      "typ": "belegt"
+    },
+    {
+      "von": "2026-10-03",
+      "bis": "2026-10-03",
+      "label": "Jubiläumsfeier",
+      "typ": "event"
+    },
+    {
+      "von": "2027-05-15",
+      "bis": "2027-05-16",
+      "label": "Hochzeit 2027",
+      "typ": "belegt"
+    },
+    {
+      "von": "2027-06-19",
+      "bis": "2027-06-20",
+      "label": "Sommerfeier",
       "typ": "belegt"
     }
   ]
