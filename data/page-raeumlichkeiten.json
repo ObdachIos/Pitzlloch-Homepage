@@ -1,7 +1,7 @@
 {
-  "hero_bild": "",
-  "hero_untertitel": "Flexibel, elegant und naturverbunden – unsere Räume schaffen den perfekten Rahmen für Ihren besonderen Anlass.",
+  "aussen_heading": "Garten & Terrasse",
   "festsaal_lead": "Unser Hauptsaal vereint zeitlose Eleganz mit einem warmen, einladenden Charakter. Hohe Decken, viel Tageslicht und eine flexible Raumaufteilung machen ihn zur idealen Bühne für Ihr Event.",
+  "hero_untertitel": "Flexibel, elegant und naturverbunden – unsere Räume schaffen den perfekten Rahmen für Ihren besonderen Anlass.",
   "festsaal_features": [
     "Flexible Bestuhlung: Bankett, U-Form, Cocktail",
     "Klimatisierung für angenehmes Raumklima",
@@ -9,13 +9,13 @@
     "Abtrennbarer Bereich für Sektempfang oder Buffet",
     "Barrierefreier Zugang"
   ],
-  "aussen_heading": "Garten & Terrasse",
+  "hero_bild": "/images/d8617fc9-bc65-45ad-b44f-855d71b65263.jpeg",
+  "festsaal_bild": "/images/4494f1e8-9198-4775-8644-8a724f6b15f5.jpeg",
+  "terrasse_bild": "/images/65960d30-c0d6-4852-8d29-a55517e0ad0d.jpeg",
   "aussen_lead": "Die weitläufige Außenanlage des Pitzlloch lädt zu Feiern unter freiem Himmel ein. Die überdachte Terrasse bietet Schutz bei wechselhaftem Wetter, ohne auf Naturgenuss zu verzichten.",
   "aussen_features": [
     "Romantische Gartenkulisse mit Alpenblick",
     "Strom- und Lichtanschlüsse im Außenbereich",
     "Großzügiger Parkplatz direkt am Gelände"
-  ],
-  "festsaal_bild": "",
-  "terrasse_bild": ""
+  ]
 }
