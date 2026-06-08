@@ -356,7 +356,8 @@
         const grid = document.getElementById('reviews-grid');
         if (grid) {
           const delays = ['fade-d1','fade-d2','fade-d3'];
-          grid.innerHTML = reviewsData.reviews.map((r, i) => `
+          const limit = grid.dataset.limit ? parseInt(grid.dataset.limit) : reviewsData.reviews.length;
+          grid.innerHTML = reviewsData.reviews.slice(0, limit).map((r, i) => `
             <div class="review-card fade ${delays[i % 3]}">
               <div class="review-stars">${'★'.repeat(r.stars || 5)}</div>
               <p class="review-text">„${r.text}"</p>
