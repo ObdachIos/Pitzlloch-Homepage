@@ -1,6 +1,6 @@
 {
-  "aktiv": false,
-  "typ": "warnung",
+  "aktiv": true,
+  "typ": "info",
   "text": "Urlaub/ Event/ Geschlossen",
   "link_text": "Jetzt anfragen",
   "link_url": "/kontakt.html"
