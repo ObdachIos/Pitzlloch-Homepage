@@ -457,6 +457,69 @@
   }
 
   /* --------------------------------------------------
+     10a2. Startseiten-Inhalte laden (page-startseite.json)
+  -------------------------------------------------- */
+  function getPath(obj, path) {
+    return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+  }
+
+  async function loadStartseite() {
+    // Nur auf der Startseite laufen (dort gibt es data-st-Elemente)
+    if (!document.querySelector('[data-st], [data-st-img], #angebote-grid')) return;
+
+    const data = await fetch('/data/page-startseite.json')
+      .then(r => r.ok ? r.json() : null).catch(() => null);
+    if (!data) return;
+
+    // Einfache Text-Felder
+    document.querySelectorAll('[data-st]').forEach(el => {
+      const val = getPath(data, el.dataset.st);
+      if (val == null) return;
+      el.innerHTML = String(val).replace(/\n/g, '<br>');
+    });
+
+    // Bilder
+    document.querySelectorAll('[data-st-img]').forEach(el => {
+      const val = getPath(data, el.dataset.stImg);
+      if (val) el.src = val;
+    });
+
+    // Link-Ziele
+    document.querySelectorAll('[data-st-href]').forEach(el => {
+      const val = getPath(data, el.dataset.stHref);
+      if (val) el.href = val;
+    });
+
+    // Angebote-Karten (3)
+    const angebote = document.getElementById('angebote-grid');
+    if (angebote && Array.isArray(data.angebote)) {
+      const delays = ['fade-d1','fade-d2','fade-d3'];
+      angebote.innerHTML = data.angebote.map((a, i) => `
+        <article class="card fade ${delays[i % 3]}">
+          <img src="${a.bild}" alt="${a.title} im Pitzlloch" loading="lazy" class="card-image">
+          <div class="card-body">
+            <span class="card-label">${a.label}</span>
+            <h3 class="card-title">${a.title}</h3>
+            <p>${a.text}</p>
+            <a href="${a.link_url}" class="btn btn-outline-dark" style="margin-top:1.25rem;">${a.link_text}</a>
+          </div>
+        </article>`).join('');
+    }
+
+    // Außenbereich – Häkchen-Liste
+    const aussen = document.getElementById('aussen-features');
+    if (aussen && Array.isArray(data.aussen?.features)) {
+      aussen.innerHTML = data.aussen.features.map(f => `
+        <li class="feature-item">
+          <span class="feature-dot">✓</span>
+          <span>${f}</span>
+        </li>`).join('');
+    }
+
+    initFadeIn(); // neu erzeugte fade-Elemente animieren
+  }
+
+  /* --------------------------------------------------
      10b. Seiten-spezifischen Content laden
   -------------------------------------------------- */
   async function loadPageContent() {
@@ -731,68 +794,6 @@
   }
 
   /* --------------------------------------------------
-     11b. Bearbeiten-Button (Deep-Link ins Decap-CMS)
-     ----------------------------------------------------
-     Aktivierung: ?edit an die URL hängen (z.B. /hochzeiten?edit)
-     Bleibt danach für die Sitzung aktiv. Ausschalten: ?edit=off
-  -------------------------------------------------- */
-  function initEditButton() {
-    // Welche Seite -> welcher Decap-Eintrag (collection / file-name)
-    const MAP = {
-      '':                  ['startseite',       'hero'],
-      'index':             ['startseite',       'hero'],
-      'hochzeiten':        ['hochzeiten',       'bilder'],
-      'feiern-events':     ['feiern',           'bilder'],
-      'kulinarik':         ['kulinarik',        'bilder'],
-      'raeumlichkeiten':   ['raeumlichkeiten',  'bilder'],
-      'ueber-uns':         ['ueberuns',         'bilder'],
-      'galerie':           ['galerie',          'bilder'],
-      'preise':            ['preise',           'pakete'],
-      'faq':               ['faq',              'fragen'],
-      'bewertungen':       ['bewertungen',      'reviews'],
-      'kontakt':           ['kalender',         'kalender'],
-    };
-
-    // ?edit / ?edit=off auswerten und Status in der Sitzung merken
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('edit')) {
-      if (params.get('edit') === 'off') sessionStorage.removeItem('pitzlloch_edit');
-      else sessionStorage.setItem('pitzlloch_edit', '1');
-    }
-    if (sessionStorage.getItem('pitzlloch_edit') !== '1') return;
-
-    // Aktuellen Seiten-Slug bestimmen (funktioniert mit und ohne .html)
-    const slug = window.location.pathname
-      .replace(/^\/+|\/+$/g, '')   // führende/abschließende Slashes weg
-      .replace(/\.html$/, '');     // .html weg (cleanUrls)
-    const target = MAP[slug];
-    if (!target) return; // Seite ohne CMS-Inhalt (Impressum, Datenschutz …)
-
-    const url = `/admin/#/collections/${target[0]}/entries/${target[1]}`;
-
-    const btn = document.createElement('a');
-    btn.href = url;
-    btn.textContent = '✏️ Diese Seite bearbeiten';
-    btn.setAttribute('aria-label', 'Diese Seite im CMS bearbeiten');
-    Object.assign(btn.style, {
-      position: 'fixed',
-      right: '20px',
-      bottom: '20px',
-      zIndex: '99999',
-      background: '#1f2d24',
-      color: '#fff',
-      padding: '12px 18px',
-      borderRadius: '999px',
-      fontSize: '15px',
-      fontWeight: '600',
-      textDecoration: 'none',
-      boxShadow: '0 6px 20px rgba(0,0,0,.25)',
-      fontFamily: 'inherit',
-    });
-    document.body.appendChild(btn);
-  }
-
-  /* --------------------------------------------------
      12. Init
   -------------------------------------------------- */
   function updateAvailChip() {
@@ -805,6 +806,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadBanner();
     loadContent();
+    loadStartseite();
     loadPageContent();
     loadKalender();
     initFadeIn();
@@ -812,7 +814,6 @@
     initGallery();
     initForms();
     initMarquee();
-    initEditButton();
     initPartials(); // initCookies() wird darin nach Footer-Load aufgerufen
   });
 
