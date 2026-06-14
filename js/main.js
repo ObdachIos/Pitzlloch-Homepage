@@ -731,6 +731,68 @@
   }
 
   /* --------------------------------------------------
+     11b. Bearbeiten-Button (Deep-Link ins Decap-CMS)
+     ----------------------------------------------------
+     Aktivierung: ?edit an die URL hängen (z.B. /hochzeiten?edit)
+     Bleibt danach für die Sitzung aktiv. Ausschalten: ?edit=off
+  -------------------------------------------------- */
+  function initEditButton() {
+    // Welche Seite -> welcher Decap-Eintrag (collection / file-name)
+    const MAP = {
+      '':                  ['startseite',       'hero'],
+      'index':             ['startseite',       'hero'],
+      'hochzeiten':        ['hochzeiten',       'bilder'],
+      'feiern-events':     ['feiern',           'bilder'],
+      'kulinarik':         ['kulinarik',        'bilder'],
+      'raeumlichkeiten':   ['raeumlichkeiten',  'bilder'],
+      'ueber-uns':         ['ueberuns',         'bilder'],
+      'galerie':           ['galerie',          'bilder'],
+      'preise':            ['preise',           'pakete'],
+      'faq':               ['faq',              'fragen'],
+      'bewertungen':       ['bewertungen',      'reviews'],
+      'kontakt':           ['kalender',         'kalender'],
+    };
+
+    // ?edit / ?edit=off auswerten und Status in der Sitzung merken
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('edit')) {
+      if (params.get('edit') === 'off') sessionStorage.removeItem('pitzlloch_edit');
+      else sessionStorage.setItem('pitzlloch_edit', '1');
+    }
+    if (sessionStorage.getItem('pitzlloch_edit') !== '1') return;
+
+    // Aktuellen Seiten-Slug bestimmen (funktioniert mit und ohne .html)
+    const slug = window.location.pathname
+      .replace(/^\/+|\/+$/g, '')   // führende/abschließende Slashes weg
+      .replace(/\.html$/, '');     // .html weg (cleanUrls)
+    const target = MAP[slug];
+    if (!target) return; // Seite ohne CMS-Inhalt (Impressum, Datenschutz …)
+
+    const url = `/admin/#/collections/${target[0]}/entries/${target[1]}`;
+
+    const btn = document.createElement('a');
+    btn.href = url;
+    btn.textContent = '✏️ Diese Seite bearbeiten';
+    btn.setAttribute('aria-label', 'Diese Seite im CMS bearbeiten');
+    Object.assign(btn.style, {
+      position: 'fixed',
+      right: '20px',
+      bottom: '20px',
+      zIndex: '99999',
+      background: '#1f2d24',
+      color: '#fff',
+      padding: '12px 18px',
+      borderRadius: '999px',
+      fontSize: '15px',
+      fontWeight: '600',
+      textDecoration: 'none',
+      boxShadow: '0 6px 20px rgba(0,0,0,.25)',
+      fontFamily: 'inherit',
+    });
+    document.body.appendChild(btn);
+  }
+
+  /* --------------------------------------------------
      12. Init
   -------------------------------------------------- */
   function updateAvailChip() {
@@ -750,6 +812,7 @@
     initGallery();
     initForms();
     initMarquee();
+    initEditButton();
     initPartials(); // initCookies() wird darin nach Footer-Load aufgerufen
   });
 
